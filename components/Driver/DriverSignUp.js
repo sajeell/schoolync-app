@@ -112,7 +112,7 @@ export default function DriverSignUp() {
             items={genderItems}
             setOpen={setGenderOpen}
             setValue={setGenderValue}
-            placeholder='City'
+            placeholder='Gender'
             setItems={setGenderItems}
             style={{
               borderWidth: 0,

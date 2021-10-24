@@ -59,7 +59,7 @@ export default function Login() {
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
-            style={{ borderWidth: 0.5 }}
+            style={{ borderWidth: 0.5, fontFamily: 'Nunito_400Regular' }}
           />
         </View>
         <TouchableOpacity>
@@ -102,11 +102,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: 'white',
     letterSpacing: 2,
+    fontFamily: 'Nunito_200ExtraLight',
   },
   companyText: {
     fontSize: 25,
     letterSpacing: 2,
     color: 'white',
+    fontFamily: 'Nunito_400Regular',
   },
   formContainer: {
     alignSelf: 'center',
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
+    fontFamily: 'Nunito_400Regular',
     elevation: 5,
   },
   heading: {
@@ -133,9 +135,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headingText: {
+    fontFamily: 'Nunito_700Bold',
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold',
   },
   inputFieldContainer: {
     flexDirection: 'row',
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     flex: 1,
+    fontFamily: 'Nunito_400Regular',
   },
   inputIcon: {
     marginLeft: 10,
@@ -163,6 +166,7 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
     width: 270,
     marginTop: 15,
+    fontFamily: 'Nunito_400Regular',
     marginBottom: 10,
   },
   forgotPassword: {
@@ -170,6 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginVertical: 5,
     right: -80,
+    fontFamily: 'Nunito_400Regular',
   },
   buttonContainer: {
     margin: 10,
@@ -195,10 +200,12 @@ const styles = StyleSheet.create({
   bottomText: {
     color: 'gray',
     fontSize: 13,
+    fontFamily: 'Nunito_400Regular',
   },
   hereText: {
     color: 'gray',
     fontSize: 13,
     fontWeight: 'bold',
+    fontFamily: 'Nunito_400Regular',
   },
 })

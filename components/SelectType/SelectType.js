@@ -40,8 +40,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: 'white',
     letterSpacing: 2,
+    fontFamily: 'Nunito_200ExtraLight',
+    fontWeight: '100',
   },
   companyText: {
+    fontFamily: 'Nunito_700Bold',
     fontSize: 25,
     letterSpacing: 2,
     color: 'white',

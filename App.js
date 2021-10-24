@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import Login from './components/Login'
+import Login from './components/Login/Login'
 
 export default function App() {
   return (

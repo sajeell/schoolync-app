@@ -9,8 +9,8 @@ import {
 } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 
-import emailIcon from '../assets/email.png'
-import lockIcon from '../assets/lock.png'
+import emailIcon from '../../assets/email.png'
+import lockIcon from '../../assets/lock.png'
 
 export default function Login() {
   const [open, setOpen] = useState(false)

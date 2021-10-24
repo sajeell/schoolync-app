@@ -13,29 +13,11 @@ import {
 import personIcon from '../../assets/person.png'
 import emailIcon from '../../assets/email.png'
 import lockIcon from '../../assets/lock.png'
-import cityIcon from '../../assets/city.png'
-import ageIcon from '../../assets/age.png'
-
-import DropDownPicker from 'react-native-dropdown-picker'
+import idCardIcon from '../../assets/id-card.png'
 
 const { width, height } = Dimensions.get('window')
 
-export default function DriverSignUp() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(null)
-  const [items, setItems] = useState([
-    { label: 'Chicago', value: 'apple' },
-    { label: 'Houston', value: 'banana' },
-  ])
-
-  const [genderOpen, setGenderOpen] = useState(false)
-  const [genderValue, setGenderValue] = useState(null)
-  const [genderItems, setGenderItems] = useState([
-    { label: 'male', value: 'male' },
-    { label: 'female', value: 'female' },
-    { label: 'other', value: 'other' },
-  ])
-
+export default function ParentSignUp() {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -44,7 +26,7 @@ export default function DriverSignUp() {
           <Text style={styles.welcomeText}>let's add a</Text>
         </View>
         <View>
-          <Text style={styles.companyText}>driver</Text>
+          <Text style={styles.companyText}>parent</Text>
         </View>
       </View>
       <View style={styles.formContainer}>
@@ -68,7 +50,7 @@ export default function DriverSignUp() {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Image source={lockIcon} style={{ width: 18, height: 23 }} />
+          <Image source={lockIcon} style={{ width: 19, height: 25 }} />
           <TextInput
             placeholder='Password'
             underlineColorAndroid='gray'
@@ -77,57 +59,12 @@ export default function DriverSignUp() {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Image source={cityIcon} style={{ width: 18, height: 23 }} />
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            placeholder='City'
-            setItems={setItems}
-            style={{
-              borderWidth: 0,
-              borderBottomWidth: 1,
-              maxWidth: '90%',
-              marginBottom: 10,
-              marginTop: -10,
-              width: 230,
-              alignSelf: 'center',
-              borderBottomColor: 'gray',
-              fontFamily: 'Nunito_400Regular',
-            }}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Image source={ageIcon} style={{ width: 22, height: 23 }} />
+          <Image source={idCardIcon} style={{ width: 23, height: 23 }} />
           <TextInput
-            keyboardType={'number-pad'}
-            placeholder='Age'
+            placeholder='Child Unique ID'
             underlineColorAndroid='gray'
             style={styles.input}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <DropDownPicker
-            open={genderOpen}
-            value={genderValue}
-            items={genderItems}
-            setOpen={setGenderOpen}
-            setValue={setGenderValue}
-            placeholder='Gender'
-            setItems={setGenderItems}
-            style={{
-              borderWidth: 0,
-              borderBottomWidth: 1,
-              width: '100%',
-              marginBottom: 10,
-              marginTop: -10,
-              width: '100%',
-              alignSelf: 'center',
-              borderBottomColor: 'gray',
-              fontFamily: 'Nunito_400Regular',
-            }}
+            secureTextEntry
           />
         </View>
         <TouchableOpacity style={styles.buttonContainer}>

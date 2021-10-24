@@ -22,6 +22,7 @@ import {
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'
 import DriverSignUp from './components/Driver/DriverSignUp'
+import ParentSignUp from './components/Parent/ParentSignUp'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -51,7 +52,8 @@ export default function App() {
     <View style={styles.container}>
       {/* <Login /> */}
       {/* <SelectType /> */}
-      <DriverSignUp />
+      {/* <DriverSignUp /> */}
+      <ParentSignUp />
       <StatusBar style='light' />
     </View>
   )

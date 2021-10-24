@@ -36,7 +36,18 @@ export default function Login() {
           <Text style={styles.headingText}>Sign In</Text>
         </View>
         <View style={styles.inputFieldContainer}>
-          <Image source={emailIcon} style={styles.inputIcon} />
+          <Image
+            source={emailIcon}
+            style={{
+              marginLeft: 10,
+              marginRight: 10,
+              width: 22,
+              height: 17,
+              opacity: 0.5,
+              resizeMode: 'stretch',
+              alignItems: 'center',
+            }}
+          />
           <TextInput
             keyboardType='email-address'
             style={styles.inputField}
@@ -44,7 +55,18 @@ export default function Login() {
           ></TextInput>
         </View>
         <View style={styles.inputFieldContainer}>
-          <Image source={lockIcon} style={styles.inputIcon} />
+          <Image
+            source={lockIcon}
+            style={{
+              marginLeft: 10,
+              marginRight: 10,
+              width: 20,
+              height: 23,
+              opacity: 0.5,
+              resizeMode: 'stretch',
+              alignItems: 'center',
+            }}
+          />
           <TextInput
             style={styles.inputField}
             placeholder='Password'
@@ -59,7 +81,18 @@ export default function Login() {
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
-            style={{ borderWidth: 0.5, fontFamily: 'Nunito_400Regular' }}
+            arrowIconContainerStyle={{
+              opacity: 0.5,
+            }}
+            textStyle={{
+              opacity: 0.5,
+            }}
+            style={{
+              borderWidth: 0.5,
+              fontFamily: 'Nunito_400Regular',
+              color: 'gray',
+              borderColor: 'gray',
+            }}
           />
         </View>
         <TouchableOpacity>
@@ -159,6 +192,8 @@ const styles = StyleSheet.create({
   inputIcon: {
     marginLeft: 10,
     marginRight: 10,
+    width: 25,
+    height: 20,
     resizeMode: 'stretch',
     alignItems: 'center',
   },
@@ -168,6 +203,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontFamily: 'Nunito_400Regular',
     marginBottom: 10,
+    zIndex: 100,
+    color: 'gray',
   },
   forgotPassword: {
     color: 'gray',
@@ -185,6 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor: greenColor,
     borderRadius: 10,
     marginTop: 20,
+    zIndex: -1,
   },
   buttonText: {
     textAlign: 'center',

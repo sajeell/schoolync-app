@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -7,11 +7,19 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
 
 import emailIcon from '../assets/email.png'
 import lockIcon from '../assets/lock.png'
 
 export default function Login() {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(null)
+  const [items, setItems] = useState([
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+  ])
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -43,9 +51,29 @@ export default function Login() {
             secureTextEntry={true}
           ></TextInput>
         </View>
+        <View style={styles.dropdownContainer}>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={{ borderWidth: 0.5 }}
+          />
+        </View>
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <View style={styles.bottomTextContainer}>
+          <Text style={styles.bottomText}>Don't have an account? Click</Text>
+          <TouchableOpacity>
+            <Text style={styles.hereText}> here</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
@@ -87,9 +115,18 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 320,
     maxWidth: '90%',
-    paddingTop: '12%',
-    marginTop: '25%',
+    paddingVertical: '12%',
+    marginTop: '20%',
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   heading: {
     textAlign: 'center',
@@ -122,9 +159,46 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     alignItems: 'center',
   },
+  dropdownContainer: {
+    maxWidth: '90%',
+    width: 270,
+    marginTop: 15,
+    marginBottom: 10,
+  },
   forgotPassword: {
     color: 'gray',
     fontSize: 13,
     marginVertical: 5,
+    right: -80,
+  },
+  buttonContainer: {
+    margin: 10,
+    justifyContent: 'center',
+    maxWidth: '90%',
+    width: 270,
+    height: 45,
+    backgroundColor: greenColor,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'white',
+  },
+  bottomTextContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    left: -30,
+    marginTop: 5,
+  },
+  bottomText: {
+    color: 'gray',
+    fontSize: 13,
+  },
+  hereText: {
+    color: 'gray',
+    fontSize: 13,
+    fontWeight: 'bold',
   },
 })

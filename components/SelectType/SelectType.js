@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   StyleSheet,
   Text,
@@ -28,7 +28,7 @@ export default function SelectType() {
         </View>
       </View>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonContainer} delayPressIn={0}>
           <Image source={buttonBg} style={styles.leftGreenBg}></Image>
           <View style={styles.roundContainer}>
             <View style={styles.innerRound}>

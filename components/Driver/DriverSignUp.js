@@ -39,6 +39,9 @@ export default function DriverSignUp() {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
+      <TouchableOpacity style={styles.backContainer}>
+        <Text style={styles.backText}>← Back</Text>
+      </TouchableOpacity>
       <View style={styles.welcomeContainer}>
         <View>
           <Text style={styles.welcomeText}>let's add a</Text>
@@ -131,7 +134,7 @@ export default function DriverSignUp() {
           />
         </View>
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+          <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style='light' />
@@ -156,8 +159,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 120,
     position: 'absolute',
   },
+  backContainer: {
+    marginTop: '15%',
+    marginLeft: '10%',
+  },
+  backText: {
+    fontFamily: 'Nunito_400Regular',
+    color: 'white',
+  },
   welcomeContainer: {
-    marginTop: '25%',
+    marginTop: '5%',
     marginLeft: '10%',
   },
   welcomeText: {

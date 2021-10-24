@@ -19,6 +19,9 @@ export default function SelectType() {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
+      <TouchableOpacity style={styles.backContainer}>
+        <Text style={styles.backText}>← Back</Text>
+      </TouchableOpacity>
       <View style={styles.welcomeContainer}>
         <View>
           <Text style={styles.welcomeText}>here's where</Text>
@@ -92,8 +95,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 120,
     position: 'absolute',
   },
+  backContainer: {
+    marginTop: '15%',
+    marginLeft: '10%',
+  },
+  backText: {
+    fontFamily: 'Nunito_400Regular',
+    color: 'white',
+  },
   welcomeContainer: {
-    marginTop: '25%',
+    marginTop: '5%',
     marginLeft: '10%',
   },
   welcomeText: {

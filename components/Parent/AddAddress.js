@@ -79,7 +79,7 @@ export default function ParentSignUp() {
           </View>
         </View>
         <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Proceed</Text>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style='light' />

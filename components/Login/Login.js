@@ -81,7 +81,6 @@ export default function Login() {
             placeholder={{ label: 'I am a', value: selectedRole, key: 1 }}
             onValueChange={async (value) => {
               setSelectedRole(await value)
-              console.log(await selectedRole)
             }}
             items={[
               { label: 'Driver', value: 'driver', key: 1 },

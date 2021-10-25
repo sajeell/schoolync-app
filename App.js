@@ -1,8 +1,13 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View, Text } from 'react-native'
-import Login from './components/Login/Login'
-import SelectType from './components/SelectType/SelectType'
+
+// import Login from './components/Login/Login'
+// import SelectType from './components/SelectType/SelectType'
+// import DriverSignUp from './components/Driver/DriverSignUp'
+// import ParentSignUp from './components/Parent/ParentSignUp'
+// import AddAddress from './components/Parent/AddAddress'
+import ParentDashboard from './components/Parent/ParentDashboard'
 
 import {
   useFonts,
@@ -21,9 +26,6 @@ import {
   Nunito_900Black,
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'
-import DriverSignUp from './components/Driver/DriverSignUp'
-import ParentSignUp from './components/Parent/ParentSignUp'
-import AddAddress from './components/Parent/AddAddress'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -55,7 +57,8 @@ export default function App() {
       {/* <SelectType /> */}
       {/* <DriverSignUp /> */}
       {/* <ParentSignUp /> */}
-      <AddAddress />
+      {/* <AddAddress /> */}
+      <ParentDashboard />
       <StatusBar style='light' />
     </View>
   )

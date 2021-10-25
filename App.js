@@ -23,6 +23,7 @@ import {
 } from '@expo-google-fonts/nunito'
 import DriverSignUp from './components/Driver/DriverSignUp'
 import ParentSignUp from './components/Parent/ParentSignUp'
+import AddAddress from './components/Parent/AddAddress'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -53,7 +54,8 @@ export default function App() {
       {/* <Login /> */}
       {/* <SelectType /> */}
       {/* <DriverSignUp /> */}
-      <ParentSignUp />
+      {/* <ParentSignUp /> */}
+      <AddAddress />
       <StatusBar style='light' />
     </View>
   )

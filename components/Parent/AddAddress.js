@@ -10,17 +10,15 @@ import {
   TextInput,
 } from 'react-native'
 
-import personIcon from '../../assets/person.png'
-import emailIcon from '../../assets/email.png'
-import lockIcon from '../../assets/lock.png'
-import cityIcon from '../../assets/city.png'
-import ageIcon from '../../assets/age.png'
-
 import RNPickerSelect from 'react-native-picker-select'
+
+import cityIcon from '../../assets/city.png'
+import cityHallIcon from '../../assets/city-hall.png'
+import condoIcon from '../../assets/condo.png'
 
 const { width, height } = Dimensions.get('window')
 
-export default function DriverSignUp() {
+export default function ParentSignUp() {
   const [selectedCity, setSelectedCity] = useState('')
   return (
     <View style={styles.container}>
@@ -30,34 +28,26 @@ export default function DriverSignUp() {
       </TouchableOpacity>
       <View style={styles.welcomeContainer}>
         <View>
-          <Text style={styles.welcomeText}>let's add a</Text>
+          <Text style={styles.welcomeText}>let's add your</Text>
         </View>
         <View>
-          <Text style={styles.companyText}>driver</Text>
+          <Text style={styles.companyText}>address</Text>
         </View>
       </View>
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
-          <Image source={personIcon} style={styles.inputIcon} />
-          <TextInput placeholder='Full Name' style={styles.input} />
+          <Image source={cityIcon} style={styles.inputIcon} />
+          <TextInput placeholder='Street Address' style={styles.input} />
         </View>
         <View style={styles.inputContainer}>
-          <Image
-            source={emailIcon}
-            style={{ width: 24, height: 17, opacity: 0.5 }}
-          />
-          <TextInput placeholder='Email Address' style={styles.input} />
-        </View>
-        <View style={styles.inputContainer}>
-          <Image source={lockIcon} style={{ width: 18, height: 23 }} />
+          <Image source={condoIcon} style={{ width: 26, height: 20 }} />
           <TextInput
-            placeholder='Password'
+            placeholder='Appartment/Suite (Optional)'
             style={styles.input}
-            secureTextEntry
           />
         </View>
         <View style={styles.inputContainer}>
-          <Image source={cityIcon} style={{ width: 18, height: 23 }} />
+          <Image source={cityHallIcon} style={{ width: 25, height: 25 }} />
           <View style={styles.dropdownContainer}>
             <RNPickerSelect
               value={selectedCity}
@@ -73,15 +63,6 @@ export default function DriverSignUp() {
             />
           </View>
         </View>
-        <View style={styles.inputContainer}>
-          <Image source={ageIcon} style={{ width: 22, height: 23 }} />
-          <TextInput
-            keyboardType={'number-pad'}
-            placeholder='Age'
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.inputContainer}></View>
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
@@ -161,10 +142,6 @@ const styles = StyleSheet.create({
     width: 270,
     marginBottom: 25,
   },
-  inputIcon: {
-    width: 24,
-    height: 22,
-  },
   dropdownContainer: {
     maxWidth: '90%',
     width: 270,
@@ -175,6 +152,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'gray',
     marginLeft: 18,
+  },
+  inputIcon: {
+    width: 18,
+    height: 25,
   },
   input: {
     maxWidth: '90%',

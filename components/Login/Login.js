@@ -7,19 +7,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker'
+
+import RNPickerSelect from 'react-native-picker-select'
 
 import emailIcon from '../../assets/email.png'
 import lockIcon from '../../assets/lock.png'
 
 export default function Login() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(null)
-  const [items, setItems] = useState([
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' },
-  ])
-
+  const [selectedRole, setSelectedRole] = useState('I am a')
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -74,25 +69,18 @@ export default function Login() {
           ></TextInput>
         </View>
         <View style={styles.dropdownContainer}>
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            arrowIconContainerStyle={{
-              opacity: 0.5,
+          <RNPickerSelect
+            value={selectedRole}
+            placeholder={{ label: 'I am a', value: selectedRole, key: 1 }}
+            onValueChange={async (value) => {
+              setSelectedRole(await value)
+              console.log(await selectedRole)
             }}
-            textStyle={{
-              opacity: 0.5,
-            }}
-            style={{
-              borderWidth: 0.5,
-              fontFamily: 'Nunito_400Regular',
-              color: 'gray',
-              borderColor: 'gray',
-            }}
+            items={[
+              { label: 'Driver', value: 'driver', key: 1 },
+              { label: 'Parent', value: 'parent', key: 2 },
+              { label: 'School', value: 'school', key: 3 },
+            ]}
           />
         </View>
         <TouchableOpacity>
@@ -203,8 +191,16 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontFamily: 'Nunito_400Regular',
     marginBottom: 10,
-    zIndex: 100,
+    // zIndex: 100,
     color: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'gray',
+  },
+  dropdown: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    fontFamily: 'Nunito_400Regular',
   },
   forgotPassword: {
     color: 'gray',

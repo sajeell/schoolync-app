@@ -53,9 +53,9 @@ export default function App() {
     <View style={styles.container}>
       {/* <Login /> */}
       {/* <SelectType /> */}
-      {/* <DriverSignUp /> */}
+      <DriverSignUp />
       {/* <ParentSignUp /> */}
-      <AddAddress />
+      {/* <AddAddress /> */}
       <StatusBar style='light' />
     </View>
   )

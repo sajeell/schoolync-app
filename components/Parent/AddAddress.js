@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from 'react-native'
 
 import RNPickerSelect from 'react-native-picker-select'
@@ -48,12 +49,26 @@ export default function ParentSignUp() {
         </View>
         <View style={styles.inputContainer}>
           <Image source={cityHallIcon} style={{ width: 25, height: 25 }} />
-          <View style={styles.dropdownContainer}>
+          <View
+            style={
+              Platform.OS === 'ios'
+                ? styles.iosDropdownContainer
+                : styles.dropdownContainer
+            }
+          >
             <RNPickerSelect
               value={selectedCity}
-              placeholder={{ label: 'City', value: selectedCity, key: 1 }}
+              placeholder={{
+                label: 'City',
+                inputLabel: selectedCity,
+                value: selectedCity,
+                key: 1,
+              }}
               onValueChange={async (value) => {
                 setSelectedCity(await value)
+              }}
+              onDonePress={(value) => {
+                setSelectedCity(value)
               }}
               items={[
                 { label: 'Houston', value: 'houston', key: 1 },
@@ -142,16 +157,29 @@ const styles = StyleSheet.create({
     width: 270,
     marginBottom: 25,
   },
+  iosDropdownContainer: {
+    maxWidth: '90%',
+    width: 260,
+    fontFamily: 'Nunito_400Regular',
+    marginBottom: 10,
+    color: 'gray',
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderRadius: 10,
+    borderColor: 'gray',
+    marginLeft: 10,
+    paddingLeft: 8,
+  },
   dropdownContainer: {
     maxWidth: '90%',
-    width: 270,
+    width: 260,
     fontFamily: 'Nunito_400Regular',
     marginBottom: 10,
     color: 'gray',
     borderBottomWidth: 1,
     borderRadius: 10,
     borderColor: 'gray',
-    marginLeft: 18,
+    marginLeft: 10,
   },
   inputIcon: {
     width: 18,

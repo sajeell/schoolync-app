@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from 'react-native'
 
 import personIcon from '../../assets/person.png'
@@ -58,7 +59,13 @@ export default function DriverSignUp() {
         </View>
         <View style={styles.inputContainer}>
           <Image source={cityIcon} style={{ width: 18, height: 23 }} />
-          <View style={styles.dropdownContainer}>
+          <View
+            style={
+              Platform.OS === 'ios'
+                ? styles.iosDropdownContainer
+                : styles.dropdownContainer
+            }
+          >
             <RNPickerSelect
               value={selectedCity}
               placeholder={{ label: 'City', value: selectedCity, key: 1 }}
@@ -165,16 +172,29 @@ const styles = StyleSheet.create({
     width: 24,
     height: 22,
   },
+  iosDropdownContainer: {
+    maxWidth: '90%',
+    width: 260,
+    fontFamily: 'Nunito_400Regular',
+    marginBottom: 10,
+    color: 'gray',
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderRadius: 10,
+    borderColor: 'gray',
+    marginLeft: 10,
+    paddingLeft: 8,
+  },
   dropdownContainer: {
     maxWidth: '90%',
-    width: 270,
+    width: 280,
     fontFamily: 'Nunito_400Regular',
     marginBottom: 10,
     color: 'gray',
     borderBottomWidth: 1,
     borderRadius: 10,
     borderColor: 'gray',
-    marginLeft: 18,
+    marginLeft: 15,
   },
   input: {
     maxWidth: '90%',

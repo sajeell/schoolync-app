@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from 'react-native'
 
 import RNPickerSelect from 'react-native-picker-select'
@@ -68,7 +69,13 @@ export default function Login() {
             secureTextEntry={true}
           ></TextInput>
         </View>
-        <View style={styles.dropdownContainer}>
+        <View
+          style={
+            Platform.OS === 'ios'
+              ? styles.iosDropdownContainer
+              : styles.dropdownContainer
+          }
+        >
           <RNPickerSelect
             value={selectedRole}
             placeholder={{ label: 'I am a', value: selectedRole, key: 1 }}
@@ -185,15 +192,25 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     alignItems: 'center',
   },
-  dropdownContainer: {
+  iosDropdownContainer: {
     maxWidth: '90%',
-    width: 270,
-    marginTop: 15,
+    width: 280,
     fontFamily: 'Nunito_400Regular',
     marginBottom: 10,
-    // zIndex: 100,
     color: 'gray',
-    borderWidth: 1,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderRadius: 10,
+    borderColor: 'gray',
+    paddingLeft: 8,
+  },
+  dropdownContainer: {
+    maxWidth: '90%',
+    width: 280,
+    fontFamily: 'Nunito_400Regular',
+    marginBottom: 10,
+    color: 'gray',
+    borderBottomWidth: 1,
     borderRadius: 10,
     borderColor: 'gray',
   },

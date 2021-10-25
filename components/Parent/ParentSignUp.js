@@ -35,28 +35,19 @@ export default function ParentSignUp() {
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <Image source={personIcon} style={styles.inputIcon} />
-          <TextInput
-            placeholder='Full Name'
-            underlineColorAndroid='gray'
-            style={styles.input}
-          />
+          <TextInput placeholder='Full Name' style={styles.input} />
         </View>
         <View style={styles.inputContainer}>
           <Image
             source={emailIcon}
             style={{ width: 24, height: 17, opacity: 0.5 }}
           />
-          <TextInput
-            placeholder='Email Address'
-            underlineColorAndroid='gray'
-            style={styles.input}
-          />
+          <TextInput placeholder='Email Address' style={styles.input} />
         </View>
         <View style={styles.inputContainer}>
           <Image source={lockIcon} style={{ width: 19, height: 25 }} />
           <TextInput
             placeholder='Password'
-            underlineColorAndroid='gray'
             style={styles.input}
             secureTextEntry
           />
@@ -65,7 +56,6 @@ export default function ParentSignUp() {
           <Image source={idCardIcon} style={{ width: 23, height: 23 }} />
           <TextInput
             placeholder='Child Unique ID'
-            underlineColorAndroid='gray'
             style={styles.input}
             secureTextEntry
           />
@@ -158,6 +148,8 @@ const styles = StyleSheet.create({
     width: 230,
     paddingBottom: 20,
     fontFamily: 'Nunito_400Regular',
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
   },
   buttonContainer: {
     margin: 10,

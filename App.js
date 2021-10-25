@@ -50,10 +50,10 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <Login />
+      {/* <Login /> */}
       {/* <SelectType /> */}
       {/* <DriverSignUp /> */}
-      {/* <ParentSignUp /> */}
+      <ParentSignUp />
       <StatusBar style='light' />
     </View>
   )

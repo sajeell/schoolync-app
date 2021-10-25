@@ -53,28 +53,19 @@ export default function DriverSignUp() {
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <Image source={personIcon} style={styles.inputIcon} />
-          <TextInput
-            placeholder='Full Name'
-            underlineColorAndroid='gray'
-            style={styles.input}
-          />
+          <TextInput placeholder='Full Name' style={styles.input} />
         </View>
         <View style={styles.inputContainer}>
           <Image
             source={emailIcon}
             style={{ width: 24, height: 17, opacity: 0.5 }}
           />
-          <TextInput
-            placeholder='Email Address'
-            underlineColorAndroid='gray'
-            style={styles.input}
-          />
+          <TextInput placeholder='Email Address' style={styles.input} />
         </View>
         <View style={styles.inputContainer}>
           <Image source={lockIcon} style={{ width: 18, height: 23 }} />
           <TextInput
             placeholder='Password'
-            underlineColorAndroid='gray'
             style={styles.input}
             secureTextEntry
           />
@@ -107,7 +98,6 @@ export default function DriverSignUp() {
           <TextInput
             keyboardType={'number-pad'}
             placeholder='Age'
-            underlineColorAndroid='gray'
             style={styles.input}
           />
         </View>
@@ -221,6 +211,8 @@ const styles = StyleSheet.create({
     width: 230,
     paddingBottom: 20,
     fontFamily: 'Nunito_400Regular',
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
   },
   buttonContainer: {
     margin: 10,

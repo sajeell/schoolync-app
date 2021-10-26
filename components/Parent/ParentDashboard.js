@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, ScrollView, Image, View, Text } from 'react-native'
 
-import upperBG from '../../assets/up-bg.png'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 export default function ParentDashboard() {
@@ -14,7 +13,7 @@ export default function ParentDashboard() {
           <Text style={styles.noTripsText}>No Trips Found</Text>
         </View>
       </ScrollView>
-      <Footer />
+      <Footer dashboard={true} />
     </View>
   )
 }

@@ -2,30 +2,28 @@ import React from 'react'
 import { StyleSheet, ScrollView, Image, View, Text } from 'react-native'
 
 import upperBG from '../../assets/up-bg.png'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 export default function ParentDashboard() {
   return (
     <View style={styles.container}>
-      <View style={{ display: 'flex', flexDirection: 'row' }}>
-        <Image source={upperBG} style={styles.upperBG} />
-        <View style={styles.menuIconContainer}>
-          <View style={styles.menuIcon}></View>
-          <View style={styles.menuIcon}></View>
-          <View style={styles.menuIcon}></View>
-        </View>
-      </View>
+      <Header />
       <ScrollView style={styles.contentContainer}>
         <Text style={styles.heading}>Dashboard</Text>
         <View style={styles.noTrips}>
           <Text style={styles.noTripsText}>No Trips Found</Text>
         </View>
       </ScrollView>
+      <Footer />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    fontFamily: 'Nunito_400Regular',
+    display: 'flex',
+    justifyContent: 'space-between',
+    height: '100%',
   },
   upperBG: {
     width: '100%',

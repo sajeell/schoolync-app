@@ -26,8 +26,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   menuIconContainer: {
-    height: 80,
-    width: 30,
+    width: 26,
     zIndex: 100,
     marginLeft: -50,
     marginTop: 50,
@@ -35,6 +34,6 @@ const styles = StyleSheet.create({
   menuIcon: {
     borderTopWidth: 2,
     borderTopColor: 'white',
-    marginBottom: 8,
+    marginBottom: 6,
   },
 })

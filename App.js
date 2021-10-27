@@ -27,6 +27,7 @@ import {
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'
 import OnGoingTrip from './components/Parent/OnGoingTrip'
+import TrackTrip from './components/Parent/TrackTrip'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -60,7 +61,8 @@ export default function App() {
       {/* <ParentSignUp /> */}
       {/* <AddAddress /> */}
       {/* <ParentDashboard /> */}
-      <OnGoingTrip />
+      {/* <OnGoingTrip /> */}
+      <TrackTrip />
       <StatusBar style='light' />
     </View>
   )

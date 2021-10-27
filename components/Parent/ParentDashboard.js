@@ -9,9 +9,12 @@ export default function ParentDashboard() {
       <Header />
       <ScrollView style={styles.contentContainer}>
         <Text style={styles.heading}>Dashboard</Text>
-        <View style={styles.noTrips}>
+        {/* <View style={styles.noTrips}>
           <Text style={styles.noTripsText}>No Trips Found</Text>
-        </View>
+        </View> */}
+        <ScrollView>
+          <View style={styles.tripBox}></View>
+        </ScrollView>
       </ScrollView>
       <Footer dashboard={true} />
     </View>
@@ -66,5 +69,21 @@ const styles = StyleSheet.create({
   noTripsText: {
     fontFamily: 'Nunito_400Regular',
     textAlign: 'center',
+  },
+  tripBox: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    margin: 5,
+    height: 70,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+    marginTop: 30,
+    borderRadius: 10,
   },
 })

@@ -31,6 +31,7 @@ import OnGoingTrip from './components/Parent/OnGoingTrip'
 import TrackTrip from './components/Parent/TrackTrip'
 import CalendarComponent from './components/Parent/Calendar'
 import Leave from './components/Parent/Leave'
+import Notifications from './components/Parent/Notifications'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -67,7 +68,8 @@ export default function App() {
       {/* <OnGoingTrip /> */}
       {/* <TrackTrip /> */}
       {/* <CalendarComponent /> */}
-      <Leave />
+      {/* <Leave /> */}
+      <Notifications />
       <StatusBar style='light' />
     </View>
   )

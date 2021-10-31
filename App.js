@@ -7,6 +7,7 @@ import { StyleSheet, View, Text } from 'react-native'
 // import DriverSignUp from './components/Driver/DriverSignUp'
 // import ParentSignUp from './components/Parent/ParentSignUp'
 // import AddAddress from './components/Parent/AddAddress'
+
 import ParentDashboard from './components/Parent/ParentDashboard'
 
 import {
@@ -28,6 +29,8 @@ import {
 } from '@expo-google-fonts/nunito'
 import OnGoingTrip from './components/Parent/OnGoingTrip'
 import TrackTrip from './components/Parent/TrackTrip'
+import CalendarComponent from './components/Parent/Calendar'
+import Leave from './components/Parent/Leave'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -62,7 +65,9 @@ export default function App() {
       {/* <AddAddress /> */}
       {/* <ParentDashboard /> */}
       {/* <OnGoingTrip /> */}
-      <TrackTrip />
+      {/* <TrackTrip /> */}
+      {/* <CalendarComponent /> */}
+      <Leave />
       <StatusBar style='light' />
     </View>
   )

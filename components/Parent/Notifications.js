@@ -109,32 +109,8 @@ export default function Notifications() {
             </Text>
           </View>
         </View>
-        <View style={styles.notification}>
-          <Image style={styles.notificationIcon} source={blueAlert} />
-          <View style={styles.notificationTextContainer}>
-            <View style={styles.row}>
-              <Text style={styles.rowHeading}>Alert</Text>
-              <Text style={styles.rowTime}>4 mins. ago</Text>
-            </View>
-            <Text style={styles.notificationText}>
-              Lorem Ipsum dolor sit amet
-            </Text>
-          </View>
-        </View>
-        <View style={styles.notification}>
-          <Image style={styles.notificationIcon} source={blueAlert} />
-          <View style={styles.notificationTextContainer}>
-            <View style={styles.row}>
-              <Text style={styles.rowHeading}>Alert</Text>
-              <Text style={styles.rowTime}>4 mins. ago</Text>
-            </View>
-            <Text style={styles.notificationText}>
-              Lorem Ipsum dolor sit amet
-            </Text>
-          </View>
-        </View>
       </ScrollView>
-      <Footer dashboard={true} />
+      <Footer notification={true} />
     </View>
   )
 }
@@ -142,7 +118,6 @@ export default function Notifications() {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    maxHeight: '85%',
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '100%',
@@ -150,6 +125,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: '5%',
+    alignSelf: 'flex-start',
+    top: 0,
   },
   toggleWrapper: {
     flexDirection: 'row',

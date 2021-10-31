@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import {
   StyleSheet,
@@ -9,6 +9,8 @@ import {
   Image,
 } from 'react-native'
 
+import { Overlay } from 'react-native-elements'
+
 import Footer from '../Footer/Footer'
 
 import backArrow from '../../assets/map-back.png'
@@ -17,6 +19,12 @@ import redMarker from '../../assets/red-marker.png'
 import busMap from '../../assets/map-bus.png'
 
 export default function TrackTrip() {
+  const [visible, setVisible] = useState(false)
+
+  const toggleOverlay = () => {
+    setVisible(!visible)
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backArrow}>
@@ -110,11 +118,14 @@ export default function TrackTrip() {
           <Text style={styles.contactDriverText}>
             Want to contact driver? Click{' '}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={toggleOverlay}>
             <Text style={styles.hereText}>here</Text>
           </TouchableOpacity>
         </View>
       </View>
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <Text>Hello from Overlay!</Text>
+      </Overlay>
       <Footer />
     </View>
   )

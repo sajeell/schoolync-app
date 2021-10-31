@@ -66,10 +66,10 @@ export default function App() {
       {/* <AddAddress /> */}
       {/* <ParentDashboard /> */}
       {/* <OnGoingTrip /> */}
-      {/* <TrackTrip /> */}
+      <TrackTrip />
       {/* <CalendarComponent /> */}
       {/* <Leave /> */}
-      <Notifications />
+      {/* <Notifications /> */}
       <StatusBar style='light' />
     </View>
   )

@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
 import onGoingTripPic from '../../assets/ongoing.png'
+import { Link } from 'react-router-native'
 
 export default function OnGoingTrip() {
   return (
@@ -18,11 +19,15 @@ export default function OnGoingTrip() {
             style={{ width: '87%', height: '87%' }}
           ></Image>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <Link
+          style={styles.button}
+          component={TouchableOpacity}
+          to='/track-trip'
+        >
           <Text style={styles.buttonText}>Track</Text>
-        </TouchableOpacity>
+        </Link>
       </View>
-      <Footer dashboard={true} />
+      <Footer />
     </View>
   )
 }

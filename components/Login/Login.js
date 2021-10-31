@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native'
-
+import { Link } from 'react-router-native'
 import RNPickerSelect from 'react-native-picker-select'
 
 import emailIcon from '../../assets/email.png'
@@ -92,14 +92,18 @@ export default function Login() {
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <Link
+          style={styles.buttonContainer}
+          component={TouchableOpacity}
+          to='/parent-dashboard'
+        >
           <Text style={styles.buttonText}>Sign In</Text>
-        </TouchableOpacity>
+        </Link>
         <View style={styles.bottomTextContainer}>
           <Text style={styles.bottomText}>Don't have an account? Click</Text>
-          <TouchableOpacity>
+          <Link component={TouchableOpacity} to='/select-type'>
             <Text style={styles.hereText}> here</Text>
-          </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </View>

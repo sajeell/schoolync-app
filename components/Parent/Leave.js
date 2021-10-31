@@ -8,6 +8,8 @@ import {
   TextInput,
 } from 'react-native'
 
+import { Link } from 'react-router-native'
+
 import { CheckBox } from 'react-native-elements'
 
 import Footer from '../Footer/Footer'
@@ -65,9 +67,13 @@ export default function Leave() {
         <View style={{ marginTop: 20 }}></View>
         <Text style={styles.mainText}>Leave Comments</Text>
         <TextInput style={styles.comments} />
-        <TouchableOpacity style={styles.button}>
+        <Link
+          style={styles.button}
+          component={TouchableOpacity}
+          to='/parent-dashboard'
+        >
           <Text style={styles.buttonText}>Apply</Text>
-        </TouchableOpacity>
+        </Link>
       </View>
       <Footer calendar={true} />
     </View>

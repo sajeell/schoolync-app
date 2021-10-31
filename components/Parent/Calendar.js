@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native'
 
+import { Link } from 'react-router-native'
+
 import moment from 'moment'
 import { Calendar } from 'react-native-calendars'
 
@@ -38,11 +40,11 @@ export default function CalendarComponent() {
             onDayPress={handleDayPress}
           />
         </View>
-        <TouchableOpacity style={styles.button}>
+        <Link style={styles.button} component={TouchableOpacity} to='/leave'>
           <Text style={styles.buttonText}>Apply For Leave</Text>
-        </TouchableOpacity>
+        </Link>
       </View>
-      <Footer dashboard={true} />
+      <Footer calendar={true} />
     </View>
   )
 }

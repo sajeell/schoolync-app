@@ -1,12 +1,13 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View, Text } from 'react-native'
+import { NativeRouter, Route } from 'react-router-native'
 
-// import Login from './components/Login/Login'
-// import SelectType from './components/SelectType/SelectType'
-// import DriverSignUp from './components/Driver/DriverSignUp'
-// import ParentSignUp from './components/Parent/ParentSignUp'
-// import AddAddress from './components/Parent/AddAddress'
+import Login from './components/Login/Login'
+import SelectType from './components/SelectType/SelectType'
+import DriverSignUp from './components/Driver/DriverSignUp'
+import ParentSignUp from './components/Parent/ParentSignUp'
+import AddAddress from './components/Parent/AddAddress'
 
 import ParentDashboard from './components/Parent/ParentDashboard'
 
@@ -32,6 +33,7 @@ import TrackTrip from './components/Parent/TrackTrip'
 import CalendarComponent from './components/Parent/Calendar'
 import Leave from './components/Parent/Leave'
 import Notifications from './components/Parent/Notifications'
+import Menu from './components/Parent/Menu'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -58,20 +60,47 @@ export default function App() {
     )
   }
   return (
-    <View style={styles.container}>
-      {/* <Login /> */}
-      {/* <SelectType /> */}
-      {/* <DriverSignUp /> */}
-      {/* <ParentSignUp /> */}
-      {/* <AddAddress /> */}
-      {/* <ParentDashboard /> */}
-      {/* <OnGoingTrip /> */}
-      <TrackTrip />
-      {/* <CalendarComponent /> */}
-      {/* <Leave /> */}
-      {/* <Notifications /> */}
-      <StatusBar style='light' />
-    </View>
+    <NativeRouter>
+      <View style={styles.container}>
+        <Route exact path='/'>
+          <Login />
+        </Route>
+        <Route path='/select-type'>
+          <SelectType />
+        </Route>
+        <Route exact path='/driver-signup'>
+          <DriverSignUp />
+        </Route>
+        <Route exact path='/parent-signup'>
+          <ParentSignUp />
+        </Route>
+        <Route exact path='/add-address'>
+          <AddAddress />
+        </Route>
+        <Route exact path='/parent-dashboard'>
+          <ParentDashboard />
+        </Route>
+        <Route exact path='/ongoing-trip'>
+          <OnGoingTrip />
+        </Route>
+        <Route exact path='/track-trip'>
+          <TrackTrip />
+        </Route>
+        <Route exact path='/calendar'>
+          <CalendarComponent />
+        </Route>
+        <Route exact path='/leave'>
+          <Leave />
+        </Route>
+        <Route exact path='/notifications'>
+          <Notifications />
+        </Route>
+        <Route exact path='/menu'>
+          <Menu />
+        </Route>
+        <StatusBar style='light' />
+      </View>
+    </NativeRouter>
   )
 }
 

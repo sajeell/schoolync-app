@@ -8,6 +8,7 @@ import {
   Dimensions,
   Image,
 } from 'react-native'
+import { Link } from 'react-router-native'
 
 import { Overlay } from 'react-native-elements'
 
@@ -27,9 +28,13 @@ export default function TrackTrip() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backArrow}>
+      <Link
+        style={styles.backArrow}
+        component={TouchableOpacity}
+        to='/ongoing-trip'
+      >
         <Image source={backArrow} />
-      </TouchableOpacity>
+      </Link>
       <MapView
         style={styles.map}
         initialRegion={{
@@ -124,7 +129,17 @@ export default function TrackTrip() {
         </View>
       </View>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <Text>Hello from Overlay!</Text>
+        <View style={styles.overlay}>
+          <Text style={styles.overlayHeading}>Driver Information</Text>
+          <Text style={styles.overlayText}>Driver Name: Gustavo Gaviria</Text>
+          <Text style={styles.overlayText}>012 345 678</Text>
+          <TouchableOpacity style={styles.callButton}>
+            <Text style={styles.callButtonText}>CALL</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.messageButton}>
+            <Text style={styles.messageButtonText}>MESSAGE</Text>
+          </TouchableOpacity>
+        </View>
       </Overlay>
       <Footer />
     </View>
@@ -235,8 +250,6 @@ const styles = StyleSheet.create({
     marginBottom: '30%',
   },
   etaContainer: {
-    // alignSelf: 'center',
-    // alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#EFEFEF',
     width: '100%',
@@ -264,5 +277,51 @@ const styles = StyleSheet.create({
   },
   hereText: {
     fontFamily: 'Nunito_700Bold',
+  },
+  overlay: {
+    margin: 10,
+    alignItems: 'center',
+    width: 250,
+    height: 300,
+  },
+  overlayHeading: {
+    fontFamily: 'Nunito_700Bold',
+    fontSize: 20,
+  },
+  overlayText: {
+    fontFamily: 'Nunito_400Regular',
+    fontSize: 17,
+    marginTop: 15,
+  },
+  callButton: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    marginTop: '10%',
+    alignItems: 'center',
+    backgroundColor: '#2B88C6',
+    padding: '4%',
+    borderRadius: 100,
+    bottom: -50,
+  },
+  callButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  messageButton: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    marginTop: '10%',
+    alignItems: 'center',
+    borderColor: '#2B88C6',
+    borderWidth: 1,
+    padding: '4%',
+    borderRadius: 100,
+    bottom: -50,
+  },
+  messageButtonText: {
+    color: '#2B88C6',
+    fontSize: 16,
   },
 })

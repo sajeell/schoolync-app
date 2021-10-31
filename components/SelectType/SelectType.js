@@ -60,19 +60,6 @@ export default function SelectType() {
             <Text style={styles.rowThree}>→</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Image source={buttonBg} style={styles.leftGreenBg}></Image>
-          <View style={styles.roundContainer}>
-            <View style={styles.innerRound}>
-              <Image source={schoolIcon} style={styles.innerIcon}></Image>
-            </View>
-          </View>
-          <View style={styles.rightContentContainer}>
-            <Text style={styles.rowOne}>I am a</Text>
-            <Text style={styles.rowTwo}>School Admin</Text>
-            <Text style={styles.rowThree}>→</Text>
-          </View>
-        </TouchableOpacity>
       </View>
     </View>
   )

@@ -1,11 +1,19 @@
 import React from 'react'
-import { StyleSheet, ScrollView, Image, View, Text } from 'react-native'
+import {
+  StyleSheet,
+  ScrollView,
+  Image,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native'
 
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
 import blueBus from '../../assets/bus-blue.png'
 import redBus from '../../assets/bus-red.png'
+import { Link } from 'react-router-native'
 
 export default function ParentDashboard() {
   return (
@@ -17,18 +25,20 @@ export default function ParentDashboard() {
           <Text style={styles.noTripsText}>No Trips Found</Text>
         </View> */}
         <ScrollView>
-          <View style={styles.tripBox}>
-            <Image source={blueBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
+          <Link component={TouchableOpacity} to='/ongoing-trip'>
+            <View style={styles.tripBox}>
+              <Image source={blueBus} style={styles.tripBusImage} />
+              <View style={styles.tripContent}>
+                <View style={styles.leftColumn}>
+                  <Text style={styles.introText}>David's Trip</Text>
+                  <Text style={styles.schoolText}>Headstart School</Text>
+                </View>
+                <View style={styles.time}>
+                  <Text style={styles.timeText}>18 mins. ago</Text>
+                </View>
               </View>
             </View>
-          </View>
+          </Link>
           <View style={styles.tripBox}>
             <Image source={redBus} style={styles.tripBusImage} />
             <View style={styles.tripContent}>

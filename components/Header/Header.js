@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native'
+import { Overlay } from 'react-native-elements'
 
 import upperBG from '../../assets/up-bg.png'
+import Menu from '../Parent/Menu'
 export default function Header(props) {
+  const [visible, setVisible] = useState(false)
+
+  const toggleOverlay = () => {
+    setVisible(!visible)
+  }
   return (
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
@@ -15,11 +22,33 @@ export default function Header(props) {
         )}
         <Image source={upperBG} style={styles.upperBG} />
         <View style={styles.menuIconContainer}>
-          <View style={styles.menuIcon}></View>
-          <View style={styles.menuIcon}></View>
-          <View style={styles.menuIcon}></View>
+          <TouchableOpacity onPress={toggleOverlay}>
+            <View style={styles.menuIcon}></View>
+            <View style={styles.menuIcon}></View>
+            <View style={styles.menuIcon}></View>
+          </TouchableOpacity>
         </View>
       </View>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={{
+          alignSelf: 'flex-start',
+          backgroundColor: 'transparent',
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <View
+          style={{
+            alignSelf: 'flex-start',
+            marginTop: 0,
+            paddingTop: 0,
+          }}
+        >
+          <Menu />
+        </View>
+      </Overlay>
     </View>
   )
 }

@@ -2,15 +2,6 @@ import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View, Text } from 'react-native'
 import { NativeRouter, Route } from 'react-router-native'
-
-import Login from './components/Login/Login'
-import SelectType from './components/SelectType/SelectType'
-import DriverSignUp from './components/Driver/DriverSignUp'
-import ParentSignUp from './components/Parent/ParentSignUp'
-import AddAddress from './components/Parent/AddAddress'
-
-import ParentDashboard from './components/Parent/ParentDashboard'
-
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -28,12 +19,20 @@ import {
   Nunito_900Black,
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'
+
+// import Login from './components/Login/Login'
+import SelectType from './components/SelectType/SelectType'
+import DriverSignUp from './components/Driver/DriverSignUp'
+import ParentSignUp from './components/Parent/ParentSignUp'
+import AddAddress from './components/Parent/AddAddress'
+import ParentDashboard from './components/Parent/ParentDashboard'
 import OnGoingTrip from './components/Parent/OnGoingTrip'
 import TrackTrip from './components/Parent/TrackTrip'
 import CalendarComponent from './components/Parent/Calendar'
 import Leave from './components/Parent/Leave'
 import Notifications from './components/Parent/Notifications'
 import Menu from './components/Parent/Menu'
+import AddBus from './components/Driver/AddBus'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -63,12 +62,16 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Route exact path='/'>
-          <Login />
+          {/* <Login /> */}
+          <AddBus />
         </Route>
         <Route path='/select-type'>
           <SelectType />
         </Route>
         <Route exact path='/driver-signup'>
+          <DriverSignUp />
+        </Route>
+        <Route exact path='/add-bus'>
           <DriverSignUp />
         </Route>
         <Route exact path='/parent-signup'>

@@ -20,7 +20,7 @@ import {
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'
 
-// import Login from './components/Login/Login'
+import Login from './components/Login/Login'
 import SelectType from './components/SelectType/SelectType'
 import DriverSignUp from './components/Driver/DriverSignUp'
 import ParentSignUp from './components/Parent/ParentSignUp'
@@ -33,6 +33,8 @@ import Leave from './components/Parent/Leave'
 import Notifications from './components/Parent/Notifications'
 import Menu from './components/Parent/Menu'
 import AddBus from './components/Driver/AddBus'
+import MarkStudents from './components/Driver/MarkStudents'
+import StudentDirection from './components/Driver/StudentDirections'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -62,8 +64,7 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Route exact path='/'>
-          {/* <Login /> */}
-          <AddBus />
+          <Login />
         </Route>
         <Route path='/select-type'>
           <SelectType />
@@ -95,11 +96,17 @@ export default function App() {
         <Route exact path='/leave'>
           <Leave />
         </Route>
+        <Route exact path='/driver-dashboard'>
+          <MarkStudents />
+        </Route>
         <Route exact path='/notifications'>
           <Notifications />
         </Route>
         <Route exact path='/menu'>
           <Menu />
+        </Route>
+        <Route exact path='/student-direction'>
+          <StudentDirection />
         </Route>
         <StatusBar style='light' />
       </View>

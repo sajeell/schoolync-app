@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native'
-import { Link } from 'react-router-native'
+import { Link, useHistory } from 'react-router-native'
 import RNPickerSelect from 'react-native-picker-select'
 
 import emailIcon from '../../assets/email.png'
@@ -16,6 +16,19 @@ import lockIcon from '../../assets/lock.png'
 
 export default function Login() {
   const [selectedRole, setSelectedRole] = useState('I am a')
+
+  let history = useHistory()
+  const proceed = () => {
+    if (selectedRole === 'parent') {
+      history.push('/parent-dashboard')
+    } else if (selectedRole === 'driver') {
+      history.push('/driver-dashboard')
+    } else {
+      alert('Please choose your role first')
+      return
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -85,20 +98,15 @@ export default function Login() {
             items={[
               { label: 'Driver', value: 'driver', key: 1 },
               { label: 'Parent', value: 'parent', key: 2 },
-              { label: 'School', value: 'school', key: 3 },
             ]}
           />
         </View>
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
-        <Link
-          style={styles.buttonContainer}
-          component={TouchableOpacity}
-          to='/parent-dashboard'
-        >
+        <TouchableOpacity style={styles.buttonContainer} onPress={proceed}>
           <Text style={styles.buttonText}>Sign In</Text>
-        </Link>
+        </TouchableOpacity>
         <View style={styles.bottomTextContainer}>
           <Text style={styles.bottomText}>Don't have an account? Click</Text>
           <Link component={TouchableOpacity} to='/select-type'>

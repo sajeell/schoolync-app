@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar } from 'expo-status-bar'
+// import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View, Text } from 'react-native'
 import { NativeRouter, Route } from 'react-router-native'
 import {
@@ -108,7 +108,7 @@ export default function App() {
         <Route exact path='/student-direction'>
           <StudentDirection />
         </Route>
-        <StatusBar style='light' />
+        {/* <StatusBar style='light' /> */}
       </View>
     </NativeRouter>
   )

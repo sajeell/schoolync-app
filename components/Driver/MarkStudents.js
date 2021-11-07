@@ -18,18 +18,22 @@ export default function MarkStudents() {
     <View style={styles.container}>
       <Header />
       <Text style={styles.heading}>Mark Students</Text>
-      <Link component={TouchableOpacity}>
+      {/* <Link component={TouchableOpacity}>
         <Text style={styles.alertText}>Generate Alert</Text>
-      </Link>
+      </Link> */}
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <ScrollView>
           <View style={styles.studentBoxContainer}>
             <View style={styles.redBox}></View>
             <View style={styles.line}></View>
-            <TouchableOpacity style={styles.studentBox}>
+            <Link
+              component={TouchableOpacity}
+              to='/student-direction'
+              style={styles.studentBox}
+            >
               <Text style={styles.name}>Maria Salem</Text>
               <Text style={styles.address}>Dubai Plaza, New York</Text>
-            </TouchableOpacity>
+            </Link>
             <View style={styles.line}></View>
             <View style={styles.greenBox}></View>
           </View>

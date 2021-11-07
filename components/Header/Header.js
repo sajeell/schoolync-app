@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native'
 import { Overlay } from 'react-native-elements'
+import { Link } from 'react-router-native'
 
 import upperBG from '../../assets/up-bg.png'
 import Menu from '../Parent/Menu'
+
 export default function Header(props) {
   const [visible, setVisible] = useState(false)
 
@@ -14,9 +16,13 @@ export default function Header(props) {
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         {props.back ? (
-          <TouchableOpacity style={styles.backContainer}>
+          <Link
+            component={TouchableOpacity}
+            to={props.backURL ? props.backURL : '/'}
+            style={styles.backContainer}
+          >
             <Text style={styles.backText}>← Back</Text>
-          </TouchableOpacity>
+          </Link>
         ) : (
           <View></View>
         )}

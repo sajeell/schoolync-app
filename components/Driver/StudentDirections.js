@@ -9,8 +9,10 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
+import { Overlay } from 'react-native-elements'
 import * as Location from 'expo-location'
 import MapViewDirections from 'react-native-maps-directions'
+import RadioGroup from 'react-native-radio-buttons-group'
 
 import Footer from '../Footer/Footer'
 import Header from './Header'
@@ -25,10 +27,15 @@ export default function StudentDirection() {
   const [latitude, setLatitude] = useState(1)
   const [longitude, setLongitude] = useState(1)
   const [errorMsg, setErrorMsg] = useState({})
+  const [visible, setVisible] = useState(false)
+
+  const toggleOverlay = () => {
+    setVisible(!visible)
+  }
 
   useEffect(() => {
     onRegionChange()
-  })
+  }, [])
 
   const onRegionChange = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -57,9 +64,28 @@ export default function StudentDirection() {
   //     console.log(location.coords)
   //   }
 
+  const radioButtonsData = [
+    {
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: 'Present',
+      value: 'present',
+    },
+    {
+      id: '2',
+      label: 'Absent',
+      value: 'absent',
+    },
+  ]
+
+  const [radioButtons, setRadioButtons] = useState(radioButtonsData)
+
+  function onPressRadioButton(radioButtonsArray) {
+    setRadioButtons(radioButtonsArray)
+  }
+
   return (
     <View style={styles.container}>
-      <Header />
+      <Header back={true} backURL={'/driver-dashboard'} />
       <Text style={styles.heading}>Route</Text>
       <MapView
         style={styles.map}
@@ -177,9 +203,76 @@ export default function StudentDirection() {
         </View>
       </View>
 
-      <Link component={TouchableOpacity} style={styles.button}>
+      <Link
+        component={TouchableOpacity}
+        style={styles.button}
+        onPress={toggleOverlay}
+      >
         <Text style={styles.buttonText}>MARK ATTENDANCE</Text>
       </Link>
+
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={{
+          alignSelf: 'center',
+          height: '35%',
+          width: '70%',
+          margin: 0,
+          padding: 0,
+          borderRadius: 20,
+        }}
+      >
+        <View
+          style={{
+            alignSelf: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'white',
+            padding: 20,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: 'Nunito_700Bold',
+              fontSize: 18,
+            }}
+          >
+            Mark Attendance
+          </Text>
+          <RadioGroup
+            radioButtons={radioButtons}
+            onPress={onPressRadioButton}
+            containerStyle={{ marginTop: 20 }}
+          />
+
+          <TouchableOpacity
+            style={{
+              alignSelf: 'center',
+              width: '100%',
+              height: '25%',
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              borderRadius: 24.5,
+              backgroundColor: 'rgba(43, 136, 198, 255)',
+              marginTop: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={toggleOverlay}
+          >
+            <Text
+              style={{
+                fontFamily: 'Nunito_700Bold',
+                color: 'white',
+                fontSize: 12,
+              }}
+            >
+              MARK
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Overlay>
     </View>
   )
 }

@@ -10,7 +10,7 @@ import { Link } from 'react-router-native'
 export default function OnGoingTrip() {
   return (
     <View style={styles.container}>
-      <Header back={true} />
+      <Header back={true} backURL={'/parent-dashboard'} />
       <View style={styles.contentContainer}>
         <Text style={styles.heading}>David's Trip</Text>
         <View style={styles.ongoingBox}>

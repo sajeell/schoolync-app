@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native'
+import { Link } from 'react-router-native'
 
 import upperBG from '../../assets/up-bg.png'
 
@@ -8,9 +9,13 @@ export default function Header(props) {
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         {props.back ? (
-          <TouchableOpacity style={styles.backContainer}>
+          <Link
+            component={TouchableOpacity}
+            to={props.backURL}
+            style={styles.backContainer}
+          >
             <Text style={styles.backText}>← Back</Text>
-          </TouchableOpacity>
+          </Link>
         ) : (
           <View></View>
         )}

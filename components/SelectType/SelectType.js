@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native'
+import { Link } from 'react-router-native'
 
 import buttonBg from '../../assets/button-bg.png'
 import driverIcon from '../../assets/driver.png'
@@ -19,9 +20,9 @@ export default function SelectType() {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
-      <TouchableOpacity style={styles.backContainer}>
+      <Link component={TouchableOpacity} to='/' style={styles.backContainer}>
         <Text style={styles.backText}>← Back</Text>
-      </TouchableOpacity>
+      </Link>
       <View style={styles.welcomeContainer}>
         <View>
           <Text style={styles.welcomeText}>here's where</Text>

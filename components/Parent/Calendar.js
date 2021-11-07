@@ -26,7 +26,7 @@ export default function CalendarComponent() {
 
   return (
     <View style={styles.container}>
-      <Header back={true} />
+      <Header back={true} backURL={"/parent-dashboard"}/>
       <View style={styles.contentContainer}>
         <View>
           <Text style={styles.heading}>Choose Date</Text>

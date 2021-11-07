@@ -31,6 +31,12 @@ export default function Menu() {
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- About Us</Text>
         </Link>
+        <Link component={TouchableOpacity} to='/parent-dashboard'>
+          <Text style={styles.menuItemText}>- About Us</Text>
+        </Link>
+        <Link component={TouchableOpacity} to='/'>
+          <Text style={styles.menuItemText}>- Log Out</Text>
+        </Link>
       </View>
       <Image source={logo} style={styles.menuImage} />
     </View>

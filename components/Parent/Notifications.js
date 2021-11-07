@@ -19,7 +19,7 @@ export default function Notifications() {
   const [isAlerts, setIsAlerts] = useState(true)
   return (
     <View style={styles.container}>
-      <Header back={true} />
+      <Header back={true} backURL={'/parent-dashboard'} />
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: '5%', marginBottom: 20 }}
       >

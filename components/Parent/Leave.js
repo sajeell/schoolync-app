@@ -20,7 +20,7 @@ export default function Leave() {
   const [toggleEveningCheckBox, setToggleEveningCheckBox] = useState(false)
   return (
     <View style={styles.container}>
-      <Header back={true} />
+      <Header back={true} backURL={'/parent-dashboard'} />
       <View style={styles.contentContainer}>
         <Text style={styles.heading}>Leave Application</Text>
 

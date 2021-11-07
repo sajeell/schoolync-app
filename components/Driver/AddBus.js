@@ -18,6 +18,7 @@ import driverIcon from '../../assets/registered-driver.png'
 import seatIcon from '../../assets/seat.png'
 
 import RNPickerSelect from 'react-native-picker-select'
+import { Link } from 'react-router-native'
 
 const { width, height } = Dimensions.get('window')
 

@@ -18,6 +18,7 @@ import cityIcon from '../../assets/city.png'
 import ageIcon from '../../assets/age.png'
 
 import RNPickerSelect from 'react-native-picker-select'
+import { Link } from 'react-router-native'
 
 const { width, height } = Dimensions.get('window')
 
@@ -26,9 +27,13 @@ export default function DriverSignUp() {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
-      <TouchableOpacity style={styles.backContainer}>
+      <Link
+        to='/driver-dashboard'
+        component={TouchableOpacity}
+        style={styles.backContainer}
+      >
         <Text style={styles.backText}>← Back</Text>
-      </TouchableOpacity>
+      </Link>
       <View style={styles.welcomeContainer}>
         <View>
           <Text style={styles.welcomeText}>let's add a</Text>

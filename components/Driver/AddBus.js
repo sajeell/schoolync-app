@@ -26,9 +26,13 @@ export default function AddBus() {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
-      <TouchableOpacity style={styles.backContainer}>
+      <Link
+        to='/driver-dashboard'
+        component={TouchableOpacity}
+        style={styles.backContainer}
+      >
         <Text style={styles.backText}>← Back</Text>
-      </TouchableOpacity>
+      </Link>
       <View style={styles.welcomeContainer}>
         <View>
           <Text style={styles.welcomeText}>let's add your</Text>
@@ -51,7 +55,11 @@ export default function AddBus() {
         </View>
         <View style={styles.inputContainer}>
           <Image source={calendarIcon} style={{ width: 21, height: 23 }} />
-          <TextInput placeholder='Manufacturing Year' style={styles.input} keyboardType={"number-pad"}/>
+          <TextInput
+            placeholder='Manufacturing Year'
+            style={styles.input}
+            keyboardType={'number-pad'}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image source={driverIcon} style={{ width: 18, height: 23 }} />

@@ -21,7 +21,7 @@ export default function MarkStudents() {
         method: 'GET',
       }
 
-      fetch('http://192.168.0.100:5000/admin/child', requestOptions)
+      fetch('https://schoolync-backend.herokuapp.com/admin/child', requestOptions)
         .then((response) => response.text())
         .then((result) => {
           setData(JSON.parse(result).data)

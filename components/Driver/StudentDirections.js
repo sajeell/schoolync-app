@@ -25,9 +25,8 @@ import studentTrip from '../../assets/student-trip.png'
 import { Link } from 'react-router-native'
 
 export default function StudentDirection() {
-  const [userLocation, setLocation] = useState({})
-  const [latitude, setLatitude] = useState(1)
-  const [longitude, setLongitude] = useState(1)
+  const [latitude, setLatitude] = useState(0)
+  const [longitude, setLongitude] = useState(0)
   const [studentName, setStudentName] = useState('')
   const [studentLocation, setStudentLocation] = useState('')
   const [errorMsg, setErrorMsg] = useState({})
@@ -51,7 +50,6 @@ export default function StudentDirection() {
       return
     }
     let locationUser = await Location.getCurrentPositionAsync({})
-    setLocation(locationUser)
     setLatitude(locationUser.coords.latitude)
     setLongitude(locationUser.coords.longitude)
 
@@ -100,9 +98,9 @@ export default function StudentDirection() {
       <Text style={styles.heading}>Route</Text>
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: 33.6291841,
-          longitude: 72.9197546,
+        region={{
+          latitude: latitude,
+          longitude: longitude,
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,
         }}

@@ -28,7 +28,7 @@ export default function AddBus() {
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
       <Link
-        to='/driver-dashboard'
+        to='/driver-signup'
         component={TouchableOpacity}
         style={styles.backContainer}
       >
@@ -98,9 +98,13 @@ export default function AddBus() {
           />
         </View>
         <View style={styles.inputContainer}></View>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <Link
+          to='/driver-dashboard'
+          component={TouchableOpacity}
+          style={styles.buttonContainer}
+        >
           <Text style={styles.buttonText}>Finish</Text>
-        </TouchableOpacity>
+        </Link>
       </View>
       <StatusBar style='light' />
     </View>

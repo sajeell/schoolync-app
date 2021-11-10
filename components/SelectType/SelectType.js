@@ -32,7 +32,12 @@ export default function SelectType() {
         </View>
       </View>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.buttonContainer} delayPressIn={0}>
+        <Link
+          to='/driver-signup'
+          component={TouchableOpacity}
+          style={styles.buttonContainer}
+          delayPressIn={0}
+        >
           <Image source={buttonBg} style={styles.leftGreenBg}></Image>
           <View style={styles.roundContainer}>
             <View style={styles.innerRound}>
@@ -44,8 +49,12 @@ export default function SelectType() {
             <Text style={styles.rowTwo}>Bus Driver</Text>
             <Text style={styles.rowThree}>→</Text>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        </Link>
+        <Link
+          to='/parent-signup'
+          component={TouchableOpacity}
+          style={styles.buttonContainer}
+        >
           <Image source={buttonBg} style={styles.leftGreenBg}></Image>
           <View style={styles.roundContainer}>
             <View style={styles.innerRound}>
@@ -60,7 +69,7 @@ export default function SelectType() {
             <Text style={styles.rowTwo}>Kid's Parent</Text>
             <Text style={styles.rowThree}>→</Text>
           </View>
-        </TouchableOpacity>
+        </Link>
       </View>
     </View>
   )

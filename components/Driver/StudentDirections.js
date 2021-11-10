@@ -13,6 +13,8 @@ import { Overlay } from 'react-native-elements'
 import * as Location from 'expo-location'
 import MapViewDirections from 'react-native-maps-directions'
 import RadioGroup from 'react-native-radio-buttons-group'
+import Geocoder from 'react-native-geocoding'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Footer from '../Footer/Footer'
 import Header from './Header'
@@ -26,8 +28,12 @@ export default function StudentDirection() {
   const [userLocation, setLocation] = useState({})
   const [latitude, setLatitude] = useState(1)
   const [longitude, setLongitude] = useState(1)
+  const [studentName, setStudentName] = useState('')
+  const [studentLocation, setStudentLocation] = useState('')
   const [errorMsg, setErrorMsg] = useState({})
   const [visible, setVisible] = useState(false)
+  const [studentLat, setStudentLat] = useState(0)
+  const [studentLong, setStudentLong] = useState(0)
 
   const toggleOverlay = () => {
     setVisible(!visible)
@@ -38,6 +44,7 @@ export default function StudentDirection() {
   }, [])
 
   const onRegionChange = async () => {
+    Geocoder.init('AIzaSyAEjvtIWPMH5ru26LtCo0ai6lH6aZ9QGuc')
     let { status } = await Location.requestForegroundPermissionsAsync()
     if (status !== 'granted') {
       setErrorMsg('Permission to access location was denied')
@@ -48,21 +55,25 @@ export default function StudentDirection() {
     setLatitude(locationUser.coords.latitude)
     setLongitude(locationUser.coords.longitude)
 
-    return {
-      latitude: locationUser.coords.latitude,
-      longitude: locationUser.coords.longitude,
+    try {
+      const address = await AsyncStorage.getItem('address')
+      const name = await AsyncStorage.getItem('name')
+      if (address !== null) {
+        setStudentLocation(address)
+        setStudentName(name)
+
+        Geocoder.from(address)
+          .then((json) => {
+            var location = json.results[0].geometry.location
+            setStudentLat(location.lat)
+            setStudentLong(location.lng)
+          })
+          .catch((error) => console.error(error))
+      }
+    } catch (e) {
+      console.error(e)
     }
   }
-  //   }, [])
-
-  //   let text = 'Waiting..'
-  //   if (errorMsg) {
-  //     text = errorMsg
-  //     console.error(errorMsg)
-  //   } else if (location) {
-  //     text = JSON.stringify(location)
-  //     console.log(location.coords)
-  //   }
 
   const radioButtonsData = [
     {
@@ -103,7 +114,7 @@ export default function StudentDirection() {
             latitude: latitude,
             longitude: longitude,
           }}
-          destination={{ latitude: latitude + 0.1, longitude: longitude + 0.2 }}
+          destination={{ latitude: studentLat, longitude: studentLong }}
           apikey={'AIzaSyAEjvtIWPMH5ru26LtCo0ai6lH6aZ9QGuc'} // insert your API Key here
           strokeWidth={6}
           strokeColor='rgba(0, 185, 102, 255)'
@@ -111,13 +122,11 @@ export default function StudentDirection() {
         />
         <Marker
           key={1}
-          title={'Maria Salem'}
-          description={'Maria Salem Location'}
+          title={studentName}
+          description={`${studentName} Location`}
           coordinate={{
-            latitude: latitude + 0.1,
-            longitude: longitude + 0.2,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
+            latitude: studentLat,
+            longitude: studentLong,
           }}
           image={redMarker}
         />
@@ -172,7 +181,7 @@ export default function StudentDirection() {
             }}
           >
             {' '}
-            Maria Salem{' '}
+            {studentName}{' '}
           </Text>
           <Text
             style={{
@@ -185,7 +194,7 @@ export default function StudentDirection() {
             }}
           >
             {' '}
-            Dubai Plaza, New York{' '}
+            {studentLocation}{' '}
           </Text>
           <Text
             style={{

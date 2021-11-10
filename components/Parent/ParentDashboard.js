@@ -21,9 +21,6 @@ export default function ParentDashboard() {
       <Header />
       <Text style={styles.heading}>Dashboard</Text>
       <ScrollView style={styles.contentContainer}>
-        {/* <View style={styles.noTrips}>
-          <Text style={styles.noTripsText}>No Trips Found</Text>
-        </View> */}
         <ScrollView>
           <Link component={TouchableOpacity} to='/ongoing-trip'>
             <View style={styles.tripBox}>
@@ -39,78 +36,6 @@ export default function ParentDashboard() {
               </View>
             </View>
           </Link>
-          <View style={styles.tripBox}>
-            <Image source={redBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.tripBox}>
-            <Image source={blueBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.tripBox}>
-            <Image source={redBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.tripBox}>
-            <Image source={blueBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.tripBox}>
-            <Image source={redBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.tripBox}>
-            <Image source={blueBus} style={styles.tripBusImage} />
-            <View style={styles.tripContent}>
-              <View style={styles.leftColumn}>
-                <Text style={styles.introText}>David's Trip</Text>
-                <Text style={styles.schoolText}>Headstart School</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.timeText}>18 mins. ago</Text>
-              </View>
-            </View>
-          </View>
         </ScrollView>
       </ScrollView>
       <Footer dashboard={true} />

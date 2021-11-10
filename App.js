@@ -73,7 +73,7 @@ export default function App() {
           <DriverSignUp />
         </Route>
         <Route exact path='/add-bus'>
-          <DriverSignUp />
+          <AddBus />
         </Route>
         <Route exact path='/parent-signup'>
           <ParentSignUp />

@@ -1,19 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   ScrollView,
-  Image,
   View,
   Text,
   TouchableOpacity,
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import Footer from '../Footer/Footer'
 import Header from './Header'
 
-import { Link } from 'react-router-native'
+import { Link, useHistory } from 'react-router-native'
 
 export default function MarkStudents() {
+  const [data, setData] = useState([])
+  const history = useHistory()
+  const getData = () => {
+    try {
+      var requestOptions = {
+        method: 'GET',
+      }
+
+      fetch('http://192.168.0.100:5000/admin/child', requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+          setData(JSON.parse(result).data)
+          const temp = JSON.parse(result).data
+        })
+        .catch((error) => console.error('error', error))
+    } catch (err) {
+      console.error(err.message)
+    }
+  }
+
+  const moveToDirectionsMap = async (address, name) => {
+    try {
+      if (address) {
+        await AsyncStorage.setItem('address', address)
+        await AsyncStorage.setItem('name', name)
+      } else {
+        await AsyncStorage.setItem('address', '244 Terry Lane')
+      }
+    } catch (e) {
+      console.error(e)
+    }
+
+    history.push('/student-direction')
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   return (
     <View style={styles.container}>
       <Header />
@@ -23,20 +61,28 @@ export default function MarkStudents() {
       </Link> */}
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <ScrollView>
-          <View style={styles.studentBoxContainer}>
-            <View style={styles.redBox}></View>
-            <View style={styles.line}></View>
-            <Link
-              component={TouchableOpacity}
-              to='/student-direction'
-              style={styles.studentBox}
-            >
-              <Text style={styles.name}>Maria Salem</Text>
-              <Text style={styles.address}>Dubai Plaza, New York</Text>
-            </Link>
-            <View style={styles.line}></View>
-            <View style={styles.greenBox}></View>
-          </View>
+          {data.map((item) => (
+            <View style={styles.studentBoxContainer} key={item.id}>
+              <View style={styles.redBox}></View>
+              <View style={styles.line}></View>
+
+              <TouchableOpacity
+                style={styles.studentBox}
+                onPress={(e) => {
+                  e.preventDefault()
+                  moveToDirectionsMap(item.Parent.address, item.name)
+                }}
+              >
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.address}>
+                  {item.Parent ? item.Parent.address : '244 Terry Lane'}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={styles.line}></View>
+              <View style={styles.greenBox}></View>
+            </View>
+          ))}
         </ScrollView>
       </ScrollView>
       <Link component={TouchableOpacity} style={styles.button}>
@@ -88,6 +134,7 @@ const styles = StyleSheet.create({
   studentBoxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 20,
   },
   redBox: {
     width: 28,

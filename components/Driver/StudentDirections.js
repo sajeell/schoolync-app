@@ -16,7 +16,6 @@ import RadioGroup from 'react-native-radio-buttons-group'
 import Geocoder from 'react-native-geocoding'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import Footer from '../Footer/Footer'
 import Header from './Header'
 import redMarker from '../../assets/red-marker.png'
 

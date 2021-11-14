@@ -5,15 +5,23 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Link, useHistory } from 'react-router-native'
+import { Overlay } from 'react-native-elements'
+import RNPickerSelect from 'react-native-picker-select'
 
 import Header from './Header'
 
-import { Link, useHistory } from 'react-router-native'
+import alertBG from '../../assets/alert-bg.jpg'
 
 export default function MarkStudents() {
   const [data, setData] = useState([])
+  const [visible, setVisible] = useState(false)
+  const [traffic, setTraffic] = useState(false)
+  const [selectedRole, setSelectedRole] = useState('I am a')
+
   const history = useHistory()
   const getData = () => {
     try {
@@ -21,7 +29,10 @@ export default function MarkStudents() {
         method: 'GET',
       }
 
-      fetch('https://schoolync-backend.herokuapp.com/admin/child', requestOptions)
+      fetch(
+        'https://schoolync-backend.herokuapp.com/admin/child',
+        requestOptions
+      )
         .then((response) => response.text())
         .then((result) => {
           setData(JSON.parse(result).data)
@@ -48,6 +59,10 @@ export default function MarkStudents() {
     history.push('/student-direction')
   }
 
+  const toggleOverlay = () => {
+    setVisible(!visible)
+  }
+
   useEffect(() => {
     getData()
   }, [])
@@ -55,10 +70,115 @@ export default function MarkStudents() {
   return (
     <View style={styles.container}>
       <Header />
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={{
+          alignSelf: 'center',
+          height: '70%',
+          width: '70%',
+          margin: 0,
+          padding: 0,
+          backgroundColor: 'white',
+          borderRadius: 20,
+          overflow: 'hidden',
+        }}
+      >
+        <View style={{ alignSelf: 'center' }}>
+          <Image
+            source={alertBG}
+            style={{
+              height: 200,
+              width: 280,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+            }}
+          />
+
+          <Text
+            style={{
+              fontFamily: 'Nunito_700Bold',
+              fontSize: 17,
+              textAlign: 'center',
+              marginTop: 15,
+            }}
+          >
+            Send Alerts
+          </Text>
+
+          <View
+            style={
+              Platform.OS === 'ios'
+                ? styles.iosDropdownContainer
+                : styles.dropdownContainer
+            }
+          >
+            <RNPickerSelect
+              value={selectedRole}
+              placeholder={{
+                label: 'Select Message',
+                value: selectedRole,
+                key: 1,
+              }}
+              onValueChange={async (value) => {
+                setSelectedRole(await value)
+              }}
+              items={[
+                { label: 'Bus Damage', value: 'bus_damage', key: 2 },
+                { label: 'Traffic Jam', value: 'traffic_jam', key: 3 },
+              ]}
+            />
+          </View>
+          <View style={{ maxWidth: '90%', alignSelf: 'center' }}>
+            <Text
+              style={{
+                fontFamily: 'Nunito_400Regular',
+                fontSize: 14,
+                textAlign: 'left',
+                marginTop: 5,
+              }}
+            >
+              Dear Parent,
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'Nunito_400Regular',
+                fontSize: 14,
+                textAlign: 'left',
+                marginTop: 3,
+              }}
+            >
+              The school bus will be late due to traffic
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'Nunito_400Regular',
+                fontSize: 14,
+                textAlign: 'left',
+                marginTop: 20,
+              }}
+            >
+              Regards,
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'Nunito_400Regular',
+                fontSize: 14,
+                textAlign: 'left',
+              }}
+            >
+              Westminster School
+            </Text>
+          </View>
+          <Link component={TouchableOpacity} style={styles.alertButton}>
+            <Text style={styles.alertButtonText}>SEND ALERT</Text>
+          </Link>
+        </View>
+      </Overlay>
       <Text style={styles.heading}>Mark Students</Text>
-      {/* <Link component={TouchableOpacity}>
+      <TouchableOpacity onPress={toggleOverlay}>
         <Text style={styles.alertText}>Generate Alert</Text>
-      </Link> */}
+      </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <ScrollView>
           {data.map((item) => (
@@ -85,6 +205,9 @@ export default function MarkStudents() {
           ))}
         </ScrollView>
       </ScrollView>
+      <Link component={TouchableOpacity} style={styles.schoolButton}>
+        <Text style={styles.schoolButtonText}>TO SCHOOL</Text>
+      </Link>
       <Link component={TouchableOpacity} style={styles.button}>
         <Text style={styles.buttonText}>FINISH RIDE</Text>
       </Link>
@@ -189,5 +312,72 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_700Bold',
     color: 'white',
     fontSize: 15,
+  },
+  schoolButton: {
+    alignSelf: 'center',
+    width: 279,
+    height: 49,
+    borderRadius: 24.5,
+    borderColor: 'rgba(43, 136, 198, 255)',
+    borderWidth: 1.5,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  schoolButtonText: {
+    fontFamily: 'Nunito_700Bold',
+    color: 'rgba(43, 136, 198, 255)',
+    fontSize: 15,
+  },
+  iosDropdownContainer: {
+    maxWidth: '90%',
+    width: 280,
+    fontFamily: 'Nunito_400Regular',
+    marginBottom: 10,
+    color: 'gray',
+    paddingBottom: 20,
+    borderWidth: 1,
+    borderRadius: 100,
+    borderColor: 'gray',
+    paddingLeft: 8,
+    marginTop: 20,
+    alignSelf: 'center',
+    paddingLeft: 10,
+  },
+  dropdownContainer: {
+    maxWidth: '90%',
+    width: 280,
+    fontFamily: 'Nunito_400Regular',
+    marginBottom: 10,
+    color: 'gray',
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: 'gray',
+    alignSelf: 'center',
+    marginTop: 20,
+    paddingLeft: 10,
+  },
+  dropdown: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    fontFamily: 'Nunito_400Regular',
+  },
+  alertButton: {
+    alignSelf: 'center',
+    width: 200,
+    height: 49,
+    borderRadius: 24.5,
+    backgroundColor: 'rgba(43, 136, 198, 255)',
+    marginBottom: 20,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  alertButtonText: {
+    fontFamily: 'Nunito_700Bold',
+    color: 'white',
+    fontSize: 14,
   },
 })

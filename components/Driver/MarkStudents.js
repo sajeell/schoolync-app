@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Link, useHistory } from 'react-router-native'
 import { Overlay } from 'react-native-elements'
@@ -20,6 +21,14 @@ export default function MarkStudents() {
   const [data, setData] = useState([])
   const [visible, setVisible] = useState(false)
   const [traffic, setTraffic] = useState(false)
+
+  const [trafficJamMessage, setTrafficJamMessage] = useState(
+    'Dear Parent,\nThe school bus will be late today due to traffic jam.\n\nRegards,\nWestminster School'
+  )
+  const [busDamageMessage, setBusDamageMessage] = useState(
+    'Dear Parent,\nThe school bus will be late today due to bus damage.\n\nRegards,\nWestminster School'
+  )
+
   const [selectedRole, setSelectedRole] = useState('I am a')
 
   const history = useHistory()
@@ -61,6 +70,37 @@ export default function MarkStudents() {
 
   const toggleOverlay = () => {
     setVisible(!visible)
+  }
+
+  async function sendPushNotification(expoPushToken) {
+    try {
+      let messageBody
+
+      if (traffic === true) {
+        messageBody = trafficJamMessage
+      } else {
+        messageBody = busDamageMessage
+      }
+
+      const message = {
+        to: 'ExponentPushToken[9aCxpGFxqWc2VXta4nE9BU]',
+        sound: 'default',
+        title: 'Alert',
+        body: messageBody,
+      }
+
+      await fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Accept-encoding': 'gzip, deflate',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -122,6 +162,11 @@ export default function MarkStudents() {
               }}
               onValueChange={async (value) => {
                 setSelectedRole(await value)
+                if (value == 'bus_damage') {
+                  setTraffic(false)
+                } else if (value == 'traffic_jam') {
+                  setTraffic(true)
+                }
               }}
               items={[
                 { label: 'Bus Damage', value: 'bus_damage', key: 2 },
@@ -129,50 +174,97 @@ export default function MarkStudents() {
               ]}
             />
           </View>
-          <View style={{ maxWidth: '90%', alignSelf: 'center' }}>
-            <Text
-              style={{
-                fontFamily: 'Nunito_400Regular',
-                fontSize: 14,
-                textAlign: 'left',
-                marginTop: 5,
-              }}
-            >
-              Dear Parent,
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Nunito_400Regular',
-                fontSize: 14,
-                textAlign: 'left',
-                marginTop: 3,
-              }}
-            >
-              The school bus will be late due to traffic
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Nunito_400Regular',
-                fontSize: 14,
-                textAlign: 'left',
-                marginTop: 20,
-              }}
-            >
-              Regards,
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Nunito_400Regular',
-                fontSize: 14,
-                textAlign: 'left',
-              }}
-            >
-              Westminster School
-            </Text>
-          </View>
-          <Link component={TouchableOpacity} style={styles.alertButton}>
+          {traffic === true ? (
+            <View style={{ maxWidth: '90%', alignSelf: 'center' }}>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                  marginTop: 5,
+                }}
+              >
+                Dear Parent,
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                  marginTop: 3,
+                }}
+              >
+                The school bus will be late due to traffic
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                  marginTop: 20,
+                }}
+              >
+                Regards,
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                }}
+              >
+                Westminster School
+              </Text>
+            </View>
+          ) : (
+            <View style={{ maxWidth: '85%', alignSelf: 'center' }}>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                  marginTop: 5,
+                }}
+              >
+                Dear Parent,
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                  marginTop: 3,
+                }}
+              >
+                The school bus will be late due to bus damage
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                  marginTop: 20,
+                }}
+              >
+                Regards,
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                  fontSize: 14,
+                  textAlign: 'left',
+                }}
+              >
+                Westminster School
+              </Text>
+            </View>
+          )}
+          <TouchableOpacity
+            style={styles.alertButton}
+            onPress={sendPushNotification}
+          >
             <Text style={styles.alertButtonText}>SEND ALERT</Text>
-          </Link>
+          </TouchableOpacity>
         </View>
       </Overlay>
       <Text style={styles.heading}>Mark Students</Text>

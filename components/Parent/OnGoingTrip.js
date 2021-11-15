@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native'
+import database from '@react-native-firebase/database'
+import { Link } from 'react-router-native'
 
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
 import onGoingTripPic from '../../assets/ongoing.png'
-import { Link } from 'react-router-native'
 
 export default function OnGoingTrip() {
+  const getData = async () => {
+    try {
+      database()
+        .ref('/driver/location')
+        .on('value', (snapshot) => {
+          console.log('User data: ', snapshot.val())
+        })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   return (
     <View style={styles.container}>
       <Header back={true} backURL={'/parent-dashboard'} />

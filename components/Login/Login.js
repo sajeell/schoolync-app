@@ -9,23 +9,63 @@ import {
   Platform,
 } from 'react-native'
 import { Link, useHistory } from 'react-router-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import RNPickerSelect from 'react-native-picker-select'
 
 import emailIcon from '../../assets/email.png'
 import lockIcon from '../../assets/lock.png'
 
 export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [selectedRole, setSelectedRole] = useState('I am a')
 
   let history = useHistory()
   const proceed = () => {
     if (selectedRole === 'parent') {
-      history.push('/parent-dashboard')
+      parentLogin()
     } else if (selectedRole === 'driver') {
-      history.push('/driver-dashboard')
+      // history.push('/driver-dashboard')
     } else {
       alert('Please choose your role first')
       return
+    }
+  }
+
+  const parentLogin = async () => {
+    try {
+      if (email == '') {
+        alert('Enter email')
+        return
+      }
+
+      if (password == '') {
+        alert('Enter password')
+        return
+      }
+
+      const body = { email, password }
+      const response = await fetch(
+        'http://192.168.0.101:5000/parent/authentication/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+
+      const data = await response.json()
+
+      if (data.success == true) {
+        await AsyncStorage.setItem('parentID', JSON.stringify(data.data[0].id))
+        await AsyncStorage.setItem('parentAddress', data.data[0].address)
+        await AsyncStorage.setItem('parent_jwt_token', data.token)
+        history.push('/parent-dashboard')
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -61,6 +101,10 @@ export default function Login() {
             keyboardType='email-address'
             style={styles.inputField}
             placeholder='Email Address'
+            value={email}
+            onChangeText={(e) => {
+              setEmail(e)
+            }}
           ></TextInput>
         </View>
         <View style={styles.inputFieldContainer}>
@@ -80,6 +124,10 @@ export default function Login() {
             style={styles.inputField}
             placeholder='Password'
             secureTextEntry={true}
+            value={password}
+            onChangeText={(e) => {
+              setPassword(e)
+            }}
           ></TextInput>
         </View>
         <View

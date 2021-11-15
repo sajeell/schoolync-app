@@ -21,6 +21,8 @@ import {
   Nunito_900Black,
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'
+import { firebase } from '@react-native-firebase/database';
+
 
 import Login from './components/Login/Login'
 import SelectType from './components/SelectType/SelectType'
@@ -51,6 +53,11 @@ export default function App() {
   const [notification, setNotification] = useState(false)
   const notificationListener = useRef()
   const responseListener = useRef()
+
+  const database = firebase
+  .app()
+  .database('https://schoolync-default-rtdb.firebaseio.com/')
+  .ref('/driver/location');
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => setExpoPushToken(token))
@@ -89,7 +96,6 @@ export default function App() {
           return
         }
         token = (await Notifications.getExpoPushTokenAsync()).data
-        console.log(token)
       } else {
         alert('Must use physical device for Push Notifications')
       }

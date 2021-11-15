@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "790107272676",
+    "firebase_url": "https://schoolync-default-rtdb.firebaseio.com",
+    "project_id": "schoolync",
+    "storage_bucket": "schoolync.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790107272676:android:eef9e8d3b5b6a6c470c3f1",
+        "android_client_info": {
+          "package_name": "com.sajios289.schoolync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790107272676-jr0q01k4i2cukmnkuokdui3rohmbt3vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb-uIds3IEJ8mqSETiI8b08YNuTXcEg-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790107272676-jr0q01k4i2cukmnkuokdui3rohmbt3vc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

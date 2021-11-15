@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   ScrollView,
@@ -7,15 +7,38 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
 import blueBus from '../../assets/bus-blue.png'
 import redBus from '../../assets/bus-red.png'
+
 import { Link } from 'react-router-native'
 
 export default function ParentDashboard() {
+  const getChildData = async () => {
+    try {
+      const parentID = await AsyncStorage.getItem('parentID')
+      const parentAddress = await AsyncStorage.getItem('parentAddress')
+
+      if (parentID && parentAddress) {
+        const studentData = await fetch(
+          `http://192.168.0.101:5000/admin/child/${parseInt(parentID)}`
+        )
+
+        console.log(studentData)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getChildData()
+  }, [])
+
   return (
     <View style={styles.container}>
       <Header />

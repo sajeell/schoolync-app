@@ -16,8 +16,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.sajios289.schoolync",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.sajios289.schoolync"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,17 +28,11 @@
         "googleMaps": {
           "apiKey": "AIzaSyAEjvtIWPMH5ru26LtCo0ai6lH6aZ9QGuc"
         }
-      },
-      "googleServicesFile": "./google-services.json"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "",
-    "plugins": [
-      "@react-native-firebase/app",
-      "@react-native-firebase/perf",
-      "@react-native-firebase/crashlytics"
-    ]
+    "description": ""
   }
 }

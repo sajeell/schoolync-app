@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native'
-import database from '@react-native-firebase/database'
 import { Link } from 'react-router-native'
 
 import Footer from '../Footer/Footer'
@@ -11,11 +10,11 @@ import onGoingTripPic from '../../assets/ongoing.png'
 export default function OnGoingTrip() {
   const getData = async () => {
     try {
-      database()
-        .ref('/driver/location')
-        .on('value', (snapshot) => {
-          console.log('User data: ', snapshot.val())
-        })
+      const currentLocation = await fetch(
+        `http://192.168.0.101:5000/trip/current_location/${1}`
+      )
+
+      console.log(currentLocation)
     } catch (error) {
       console.error(error)
     }

@@ -25,7 +25,7 @@ export default function Login() {
     if (selectedRole === 'parent') {
       parentLogin()
     } else if (selectedRole === 'driver') {
-      // history.push('/driver-dashboard')
+      history.push('/driver-dashboard')
     } else {
       alert('Please choose your role first')
       return

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
-  ScrollView,
   Image,
   View,
   Text,
@@ -33,6 +32,32 @@ export default function StudentDirection() {
   const [studentLat, setStudentLat] = useState(0)
   const [studentLong, setStudentLong] = useState(0)
 
+  const updateLocation = async (latitude, longitude) => {
+    try {
+      const body = {
+        trip_id: 1,
+        current_location: {
+          latitude: latitude,
+          longitude: longitude,
+        },
+      }
+      const location = await fetch(
+        'http://192.168.0.101:5000/trip/update_location',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+
+      console.log(location)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const toggleOverlay = () => {
     setVisible(!visible)
   }
@@ -52,12 +77,16 @@ export default function StudentDirection() {
     setLatitude(locationUser.coords.latitude)
     setLongitude(locationUser.coords.longitude)
 
+    updateLocation(locationUser.coords.latitude, locationUser.coords.longitude)
+
     try {
       const address = await AsyncStorage.getItem('address')
       const name = await AsyncStorage.getItem('name')
       if (address !== null) {
         setStudentLocation(address)
         setStudentName(name)
+
+        console.log(address)
 
         Geocoder.from(address)
           .then((json) => {

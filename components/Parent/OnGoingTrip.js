@@ -11,7 +11,7 @@ export default function OnGoingTrip() {
   const getData = async () => {
     try {
       const currentLocation = await fetch(
-        `http://192.168.0.101:5000/trip/current_location/${1}`
+        `https://schoolync-backend.herokuapp.com/trip/current_location/${1}`
       )
 
       console.log(currentLocation)

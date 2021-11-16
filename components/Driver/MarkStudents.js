@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Switch,
 } from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -20,7 +21,10 @@ import alertBG from '../../assets/alert-bg.jpg'
 export default function MarkStudents() {
   const [data, setData] = useState([])
   const [visible, setVisible] = useState(false)
+  const [updateStatusVisible, setUpdateStatusVisible] = useState(false)
   const [traffic, setTraffic] = useState(false)
+  const [onMyWay, setOnMyWay] = useState(false)
+  const [pickingStudents, setPickingStudents] = useState(false)
 
   const [trafficJamMessage, setTrafficJamMessage] = useState(
     'Dear Parent,\nThe school bus will be late today due to traffic jam.\n\nRegards,\nWestminster School'
@@ -70,6 +74,10 @@ export default function MarkStudents() {
 
   const toggleOverlay = () => {
     setVisible(!visible)
+  }
+
+  const toggleUpdateStatusOverlay = () => {
+    setUpdateStatusVisible(!updateStatusVisible)
   }
 
   async function sendPushNotification(expoPushToken) {
@@ -297,12 +305,119 @@ export default function MarkStudents() {
           ))}
         </ScrollView>
       </ScrollView>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={toggleUpdateStatusOverlay}
+      >
+        <Text style={styles.buttonText}>UPDATE STATUS</Text>
+      </TouchableOpacity>
       <Link component={TouchableOpacity} style={styles.schoolButton}>
         <Text style={styles.schoolButtonText}>TO SCHOOL</Text>
       </Link>
       <Link component={TouchableOpacity} style={styles.button}>
         <Text style={styles.buttonText}>FINISH RIDE</Text>
       </Link>
+      <Overlay
+        isVisible={updateStatusVisible}
+        onBackdropPress={toggleUpdateStatusOverlay}
+        overlayStyle={{
+          alignSelf: 'center',
+          height: '70%',
+          width: '70%',
+          margin: 0,
+          padding: 0,
+          backgroundColor: 'white',
+          borderRadius: 20,
+          overflow: 'hidden',
+        }}
+      >
+        <View style={{ alignSelf: 'center' }}>
+          <Image
+            source={alertBG}
+            style={{
+              height: 200,
+              width: 280,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+            }}
+          />
+
+          <Text
+            style={{
+              fontFamily: 'Nunito_700Bold',
+              fontSize: 17,
+              textAlign: 'center',
+              marginTop: 15,
+            }}
+          >
+            Update Status
+          </Text>
+
+          <View
+            style={{
+              alignSelf: 'center',
+              marginTop: 20,
+            }}
+          >
+            <View
+              style={{
+                alignSelf: 'center',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={onMyWay ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor='#3e3e3e'
+                onValueChange={() => {
+                  setOnMyWay(!onMyWay)
+                }}
+                value={onMyWay}
+              />
+
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                }}
+              >
+                On My Way
+              </Text>
+            </View>
+            <View
+              style={{
+                alignSelf: 'center',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={pickingStudents ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor='#3e3e3e'
+                onValueChange={() => {
+                  setPickingStudents(!pickingStudents)
+                }}
+                value={pickingStudents}
+              />
+              <Text
+                style={{
+                  fontFamily: 'Nunito_400Regular',
+                }}
+              >
+                Started Picking Students
+              </Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={styles.alertButton}
+            onPress={toggleUpdateStatusOverlay}
+          >
+            <Text style={styles.alertButtonText}>OK</Text>
+          </TouchableOpacity>
+        </View>
+      </Overlay>
     </View>
   )
 }

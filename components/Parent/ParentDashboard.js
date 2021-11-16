@@ -25,7 +25,7 @@ export default function ParentDashboard() {
 
       if (parentID && parentAddress) {
         const studentData = await fetch(
-          `http://192.168.0.101:5000/admin/child/${parseInt(parentID)}`
+          `https://schoolync-backend.herokuapp.com/admin/child/${parseInt(parentID)}`
         )
 
         console.log(studentData)

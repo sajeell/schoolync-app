@@ -42,7 +42,7 @@ export default function StudentDirection() {
         },
       }
       const location = await fetch(
-        'http://192.168.0.101:5000/trip/update_location',
+        'https://schoolync-backend.herokuapp.com/trip/update_location',
         {
           method: 'PUT',
           headers: {
@@ -51,8 +51,6 @@ export default function StudentDirection() {
           body: JSON.stringify(body),
         }
       )
-
-      console.log(location)
     } catch (error) {
       console.error(error)
     }
@@ -122,7 +120,7 @@ export default function StudentDirection() {
 
   return (
     <View style={styles.container}>
-      <Header back={true} backURL={'/driver-dashboard'} />
+      <Header back={true} backURL={'/driver-mark-students'} />
       <Text style={styles.heading}>Route</Text>
       <MapView
         style={styles.map}
@@ -133,7 +131,7 @@ export default function StudentDirection() {
           longitudeDelta: 0.02,
         }}
         showsUserLocation
-        onRegionChangeComplete={onRegionChange}
+        onUserLocationChange={onRegionChange}
       >
         <MapViewDirections
           origin={{
@@ -237,6 +235,10 @@ export default function StudentDirection() {
           </Text>
         </View>
       </View>
+
+      <TouchableOpacity style={styles.schoolButton}>
+        <Text style={styles.schoolButtonText}>ON THE DOORSTEP</Text>
+      </TouchableOpacity>
 
       <Link
         component={TouchableOpacity}
@@ -407,6 +409,24 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: 'Nunito_700Bold',
     color: 'white',
+    fontSize: 15,
+  },
+  schoolButton: {
+    alignSelf: 'center',
+    width: 279,
+    height: 49,
+    borderRadius: 24.5,
+    borderColor: 'rgba(43, 136, 198, 255)',
+    borderWidth: 1.5,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  schoolButtonText: {
+    fontFamily: 'Nunito_700Bold',
+    color: 'rgba(43, 136, 198, 255)',
     fontSize: 15,
   },
   map: {

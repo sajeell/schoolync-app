@@ -46,7 +46,7 @@ export default function Login() {
 
       const body = { email, password }
       const response = await fetch(
-        'http://192.168.0.101:5000/parent/authentication/login',
+        'https://schoolync-backend.herokuapp.com/parent/authentication/login',
         {
           method: 'POST',
           headers: {

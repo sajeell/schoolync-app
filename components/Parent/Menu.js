@@ -16,20 +16,14 @@ export default function Menu() {
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- Profile</Text>
         </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
-          <Text style={styles.menuItemText}>- Child's Profile</Text>
-        </Link>
         <Link component={TouchableOpacity} to='/leave'>
-          <Text style={styles.menuItemText}>- Apply For Leave</Text>
+          <Text style={styles.menuItemText}>- Report Student Absence</Text>
         </Link>
         <Link component={TouchableOpacity} to='/notifications'>
           <Text style={styles.menuItemText}>- Alerts & Notifications</Text>
         </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
+        <Link component={TouchableOpacity} to='/faq'>
           <Text style={styles.menuItemText}>- FAQ</Text>
-        </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
-          <Text style={styles.menuItemText}>- About Us</Text>
         </Link>
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- About Us</Text>

@@ -46,7 +46,7 @@ export default function SelectType() {
           </View>
           <View style={styles.rightContentContainer}>
             <Text style={styles.rowOne}>I am a</Text>
-            <Text style={styles.rowTwo}>Bus Driver</Text>
+            <Text style={styles.rowTwo}>Driver</Text>
             <Text style={styles.rowThree}>→</Text>
           </View>
         </Link>
@@ -66,7 +66,7 @@ export default function SelectType() {
           </View>
           <View style={styles.rightContentContainer}>
             <Text style={styles.rowOne}>I am a</Text>
-            <Text style={styles.rowTwo}>Kid's Parent</Text>
+            <Text style={styles.rowTwo}>Parent</Text>
             <Text style={styles.rowThree}>→</Text>
           </View>
         </Link>

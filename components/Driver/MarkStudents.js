@@ -311,10 +311,18 @@ export default function MarkStudents() {
       >
         <Text style={styles.buttonText}>UPDATE STATUS</Text>
       </TouchableOpacity>
-      <Link component={TouchableOpacity} style={styles.schoolButton}>
+      <Link
+        component={TouchableOpacity}
+        style={styles.schoolButton}
+        to={'/school-direction'}
+      >
         <Text style={styles.schoolButtonText}>TO SCHOOL</Text>
       </Link>
-      <Link component={TouchableOpacity} style={styles.button}>
+      <Link
+        component={TouchableOpacity}
+        style={styles.button}
+        to='/driver-dashboard'
+      >
         <Text style={styles.buttonText}>FINISH RIDE</Text>
       </Link>
       <Overlay

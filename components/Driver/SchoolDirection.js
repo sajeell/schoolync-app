@@ -20,7 +20,7 @@ import Footer from '../Footer/Footer'
 import Header from './Header'
 import redMarker from '../../assets/red-marker.png'
 
-import studentTrip from '../../assets/student-trip.png'
+import schoolVector from '../../assets/school-vector.png'
 
 import { Link } from 'react-router-native'
 
@@ -139,9 +139,7 @@ export default function SchoolDirection() {
       >
         <View
           style={{
-            alignItems: 'flex-start',
-            paddingStart: 11,
-            paddingTop: 9,
+            justifyContent: 'center',
             width: 145,
             height: 142,
             borderRadius: 10,
@@ -150,10 +148,12 @@ export default function SchoolDirection() {
         >
           <Image
             style={{
-              width: 124,
-              height: 124,
+              width: 120,
+              height: 100,
+              marginTop: -15,
+              alignSelf: 'center',
             }}
-            source={studentTrip}
+            source={schoolVector}
           />
         </View>
         <View
@@ -179,7 +179,7 @@ export default function SchoolDirection() {
             }}
           >
             {' '}
-            {studentName}{' '}
+            Bahria University{' '}
           </Text>
           <Text
             style={{
@@ -213,9 +213,9 @@ export default function SchoolDirection() {
       <Link
         component={TouchableOpacity}
         style={styles.button}
-        onPress={toggleOverlay}
+        to='/driver-dashboard'
       >
-        <Text style={styles.buttonText}>MARK ATTENDANCE</Text>
+        <Text style={styles.buttonText}>FINISH RIDE</Text>
       </Link>
 
       <Overlay

@@ -38,6 +38,8 @@ import AddBus from './components/Driver/AddBus'
 import MarkStudents from './components/Driver/MarkStudents'
 import StudentDirection from './components/Driver/StudentDirections'
 import DriverDashboard from './components/Driver/DriverDashboard'
+import FAQ from './components/Parent/FAQ'
+import SchoolDirection from './components/Driver/SchoolDirection'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -168,6 +170,9 @@ export default function App() {
         <Route exact path='/leave'>
           <Leave />
         </Route>
+        <Route exact path='/faq'>
+          <FAQ />
+        </Route>
         <Route exact path='/driver-dashboard'>
           <DriverDashboard />
         </Route>
@@ -182,6 +187,9 @@ export default function App() {
         </Route>
         <Route exact path='/student-direction'>
           <StudentDirection />
+        </Route>
+        <Route exact path='/school-direction'>
+          <SchoolDirection />
         </Route>
         {/* <StatusBar style='light' /> */}
       </View>

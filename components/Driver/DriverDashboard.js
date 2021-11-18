@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native'
 
-import { Link } from 'react-router-native'
+import { Link, useHistory } from 'react-router-native'
 import { Overlay } from 'react-native-elements'
 
 import Header from './Header'
@@ -11,9 +12,55 @@ import startRideBG from '../../assets/start-ride-bg.jpg'
 export default function DriverDashboard() {
   const [visible, setVisible] = useState(false)
 
+  let history = useHistory()
+
   const toggleOverlay = () => {
     setVisible(!visible)
   }
+
+  const checkExistingTrip = async () => {
+    try {
+      const driverID = await AsyncStorage.getItem('driverID')
+      const trip = await fetch(`http://192.168.0.101:5000/trip/${driverID}`)
+      const data = await trip.json()
+
+      if (data.data.length !== 0) {
+        history.push('/mark-students')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const startNewTrip = async () => {
+    try {
+      const driverID = await AsyncStorage.getItem('driverID')
+
+      const body = {
+        driver_id: driverID,
+        current_location: {},
+        current_status: 'started',
+      }
+      const trip = await fetch(`http://192.168.0.101:5000/trip/`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+      const data = await trip.json()
+
+      if (data.data.length !== 0) {
+        history.push('/driver-mark-students')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    checkExistingTrip()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -56,13 +103,9 @@ export default function DriverDashboard() {
             Are you sure you want to start the ride?
           </Text>
 
-          <Link
-            component={TouchableOpacity}
-            to='/driver-mark-students'
-            style={styles.alertButton}
-          >
+          <TouchableOpacity style={styles.alertButton} onPress={startNewTrip}>
             <Text style={styles.alertButtonText}>START RIDE</Text>
-          </Link>
+          </TouchableOpacity>
           <TouchableOpacity
             style={{
               alignSelf: 'center',

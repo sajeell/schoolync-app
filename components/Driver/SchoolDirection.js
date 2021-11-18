@@ -34,6 +34,7 @@ export default function SchoolDirection() {
   const [studentLat, setStudentLat] = useState(0)
   const [studentLong, setStudentLong] = useState(0)
 
+
   const toggleOverlay = () => {
     setVisible(!visible)
   }
@@ -90,6 +91,8 @@ export default function SchoolDirection() {
 
   function onPressRadioButton(radioButtonsArray) {
     setRadioButtons(radioButtonsArray)
+
+    console.log(radioButtonsArray)
   }
 
   return (
@@ -249,7 +252,9 @@ export default function SchoolDirection() {
           </Text>
           <RadioGroup
             radioButtons={radioButtons}
-            onPress={onPressRadioButton}
+            onPress={(e) => {
+              console.log(e)
+            }}
             containerStyle={{ marginTop: 20 }}
           />
 
@@ -266,7 +271,7 @@ export default function SchoolDirection() {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={toggleOverlay}
+            onPress={markAttendance}
           >
             <Text
               style={{

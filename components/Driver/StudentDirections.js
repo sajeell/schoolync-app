@@ -20,7 +20,7 @@ import redMarker from '../../assets/red-marker.png'
 
 import studentTrip from '../../assets/student-trip.png'
 
-import { Link } from 'react-router-native'
+import { Link, useHistory } from 'react-router-native'
 
 export default function StudentDirection() {
   const [latitude, setLatitude] = useState(0)
@@ -31,6 +31,9 @@ export default function StudentDirection() {
   const [visible, setVisible] = useState(false)
   const [studentLat, setStudentLat] = useState(0)
   const [studentLong, setStudentLong] = useState(0)
+  const [attendanceStatus, setAttendanceStatus] = useState(false)
+
+  let history = useHistory()
 
   const updateLocation = async (latitude, longitude) => {
     try {
@@ -51,6 +54,40 @@ export default function StudentDirection() {
           body: JSON.stringify(body),
         }
       )
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const markAttendance = async () => {
+    try {
+      // toggleOverlay()
+
+      const driverID = await AsyncStorage.getItem('driverID')
+      const studentID = await AsyncStorage.getItem('id')
+
+      const body = {
+        driver_id: driverID,
+        student_id: studentID,
+        status: attendanceStatus,
+      }
+
+      const attendance = await fetch('http://192.168.0.101:5000/attendance', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+
+      const response = await attendance.json()
+
+      if (response.success === true) {
+        alert('Successfully Marked Attendance')
+        history.push('/driver-mark-students')
+        toggleOverlay()
+      }
     } catch (error) {
       console.error(error)
     }
@@ -116,6 +153,14 @@ export default function StudentDirection() {
 
   function onPressRadioButton(radioButtonsArray) {
     setRadioButtons(radioButtonsArray)
+    const presentData = radioButtonsArray[0].selected
+    const absentData = radioButtonsArray[1].selected
+
+    if (presentData) {
+      setAttendanceStatus(true)
+    } else {
+      setAttendanceStatus(false)
+    }
   }
 
   return (
@@ -296,7 +341,7 @@ export default function StudentDirection() {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={toggleOverlay}
+            onPress={markAttendance}
           >
             <Text
               style={{

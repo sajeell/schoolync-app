@@ -25,7 +25,7 @@ export default function Login() {
     if (selectedRole === 'parent') {
       parentLogin()
     } else if (selectedRole === 'driver') {
-      history.push('/driver-dashboard')
+      driverLogin()
     } else {
       alert('Please choose your role first')
       return
@@ -41,6 +41,11 @@ export default function Login() {
 
       if (password == '') {
         alert('Enter password')
+        return
+      }
+
+      if (!validateEmail(email)) {
+        alert('Invalid Email')
         return
       }
 
@@ -63,6 +68,54 @@ export default function Login() {
         await AsyncStorage.setItem('parentAddress', data.data[0].address)
         await AsyncStorage.setItem('parent_jwt_token', data.token)
         history.push('/parent-dashboard')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return re.test(String(email).toLowerCase())
+  }
+
+  const driverLogin = async () => {
+    try {
+      if (email == '') {
+        alert('Enter email')
+        return
+      }
+
+      if (password == '') {
+        alert('Enter password')
+        return
+      }
+
+      if (!validateEmail(email)) {
+        alert('Invalid Email')
+        return
+      }
+
+      const body = { email, password }
+      const response = await fetch(
+        'http://192.168.0.101:5000/driver/authentication/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+
+      const data = await response.json()
+
+      if (data.success == true) {
+        await AsyncStorage.clear()
+        await AsyncStorage.setItem('driverID', JSON.stringify(data.data[0].id))
+        await AsyncStorage.setItem('driver_jwt_token', data.token)
+        history.push('/driver-dashboard')
       }
     } catch (error) {
       console.error(error)

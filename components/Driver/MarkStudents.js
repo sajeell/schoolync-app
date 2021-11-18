@@ -57,19 +57,68 @@ export default function MarkStudents() {
     }
   }
 
-  const moveToDirectionsMap = async (address, name) => {
+  const getTripStatus = async () => {
+    try {
+      var requestOptions = {
+        method: 'GET',
+      }
+      const driverID = await AsyncStorage.getItem('driverID')
+      fetch(`http://192.168.0.101:5000/trip/${driverID}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+          if (JSON.parse(result).data[0].current_status === 'on-my-way') {
+            setOnMyWay(true)
+          }
+          if (
+            JSON.parse(result).data[0].current_status ===
+            'started-picking-students'
+          ) {
+            setOnMyWay(true)
+            setPickingStudents(true)
+          }
+        })
+        .catch((error) => console.error('error', error))
+    } catch (err) {
+      console.error(err.message)
+    }
+  }
+
+  const moveToDirectionsMap = async (id, address, name) => {
     try {
       if (address) {
+        await AsyncStorage.setItem('id', JSON.stringify(id))
         await AsyncStorage.setItem('address', address)
         await AsyncStorage.setItem('name', name)
       } else {
-        await AsyncStorage.setItem('address', '244 Terry Lane')
+        alert('Error')
       }
     } catch (e) {
       console.error(e)
     }
 
     history.push('/student-direction')
+  }
+
+  const updateTripStatus = async (status) => {
+    try {
+      const driverID = await AsyncStorage.getItem('driverID')
+
+      const body = { driver_id: driverID, current_status: status }
+      const tripUpdate = await fetch(
+        'http://192.168.0.101:5000/trip/update_status',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+
+      console.log(tripUpdate)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const toggleOverlay = () => {
@@ -113,6 +162,10 @@ export default function MarkStudents() {
 
   useEffect(() => {
     getData()
+  }, [])
+
+  useEffect(() => {
+    getTripStatus()
   }, [])
 
   return (
@@ -290,7 +343,7 @@ export default function MarkStudents() {
                 style={styles.studentBox}
                 onPress={(e) => {
                   e.preventDefault()
-                  moveToDirectionsMap(item.Parent.address, item.name)
+                  moveToDirectionsMap(item.id, item.Parent.address, item.name)
                 }}
               >
                 <Text style={styles.name}>{item.name}</Text>
@@ -379,9 +432,11 @@ export default function MarkStudents() {
                 thumbColor={onMyWay ? '#f5dd4b' : '#f4f3f4'}
                 ios_backgroundColor='#3e3e3e'
                 onValueChange={() => {
-                  setOnMyWay(!onMyWay)
+                  setOnMyWay(true)
+                  updateTripStatus('on-my-way')
                 }}
                 value={onMyWay}
+                disabled={onMyWay}
               />
 
               <Text
@@ -404,9 +459,11 @@ export default function MarkStudents() {
                 thumbColor={pickingStudents ? '#f5dd4b' : '#f4f3f4'}
                 ios_backgroundColor='#3e3e3e'
                 onValueChange={() => {
-                  setPickingStudents(!pickingStudents)
+                  setPickingStudents(true)
+                  updateTripStatus('started-picking-students')
                 }}
                 value={pickingStudents}
+                disabled={pickingStudents}
               />
               <Text
                 style={{

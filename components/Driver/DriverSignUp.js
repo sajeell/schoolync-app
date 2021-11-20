@@ -18,12 +18,72 @@ import cityIcon from '../../assets/city.png'
 import ageIcon from '../../assets/age.png'
 
 import RNPickerSelect from 'react-native-picker-select'
-import { Link } from 'react-router-native'
+import { Link, useHistory } from 'react-router-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const { width, height } = Dimensions.get('window')
 
 export default function DriverSignUp() {
+  let history = useHistory()
   const [selectedCity, setSelectedCity] = useState('')
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [age, setAge] = useState()
+  const [phone, setPhone] = useState()
+
+  const signUp = async () => {
+    try {
+      if (
+        email == '' ||
+        password == '' ||
+        name == '' ||
+        age == '' ||
+        selectedCity == '' ||
+        phone == ''
+      ) {
+        alert('Missing Values')
+        return
+      }
+      const body = {
+        email: email,
+        password: password,
+        name: name,
+        age: age,
+        city: selectedCity,
+        phone: phone,
+      }
+
+      await AsyncStorage.setItem('driverSignUpBody', JSON.stringify(body))
+
+      history.push('/add-bus')
+
+      // const parent = await fetch(
+      //   'http://192.168.0.101:5000/driver/authentication/register',
+      //   {
+      //     method: 'POST',
+      //     headers: {
+      //       Accept: 'application/json',
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify(body),
+      //   }
+      // )
+
+      // const data = await parent.json()
+
+      // console.log(data)
+
+      // await AsyncStorage.setItem('driverID', JSON.stringify(data.data.id))
+      // await AsyncStorage.setItem('driver_jwt_token', data.token)
+
+      // history.push('/add-bus')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -45,14 +105,25 @@ export default function DriverSignUp() {
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <Image source={personIcon} style={styles.inputIcon} />
-          <TextInput placeholder='Full Name' style={styles.input} />
+          <TextInput
+            placeholder='Full Name'
+            style={styles.input}
+            value={name}
+            onChangeText={(e) => setName(e)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image
             source={emailIcon}
             style={{ width: 24, height: 17, opacity: 0.5 }}
           />
-          <TextInput placeholder='Email Address' style={styles.input} />
+          <TextInput
+            placeholder='Email Address'
+            style={styles.input}
+            keyboardType='email-address'
+            value={email}
+            onChangeText={(e) => setEmail(e)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image source={lockIcon} style={{ width: 18, height: 23 }} />
@@ -60,6 +131,8 @@ export default function DriverSignUp() {
             placeholder='Password'
             style={styles.input}
             secureTextEntry
+            value={password}
+            onChangeText={(e) => setPassword(e)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -383,16 +456,41 @@ export default function DriverSignUp() {
             keyboardType={'number-pad'}
             placeholder='Age'
             style={styles.input}
+            value={age}
+            onChangeText={(e) => setAge(e)}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            alignSelf: 'center',
+            width: 300,
+            marginLeft: 30,
+            marginBottom: 25,
+          }}
+        >
+          <TextInput
+            keyboardType={'number-pad'}
+            placeholder='Phone Number'
+            style={{
+              maxWidth: '90%',
+              width: 300,
+              alignSelf: 'center',
+              paddingBottom: 20,
+              fontFamily: 'Nunito_400Regular',
+              borderBottomWidth: 1,
+              borderBottomColor: 'gray',
+            }}
+            value={phone}
+            onChangeText={(e) => setPhone(e)}
           />
         </View>
         <View style={styles.inputContainer}></View>
-        <Link
-          to='/add-bus'
-          component={TouchableOpacity}
-          style={styles.buttonContainer}
-        >
+        <TouchableOpacity onPress={signUp} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Proceed</Text>
-        </Link>
+        </TouchableOpacity>
       </View>
       <StatusBar style='light' />
     </View>

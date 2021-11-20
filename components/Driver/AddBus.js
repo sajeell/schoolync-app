@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
+  ScrollView,
 } from 'react-native'
 
 import licenseIcon from '../../assets/license.png'
@@ -18,12 +19,69 @@ import driverIcon from '../../assets/registered-driver.png'
 import seatIcon from '../../assets/seat.png'
 
 import RNPickerSelect from 'react-native-picker-select'
-import { Link } from 'react-router-native'
+import { Link, useHistory } from 'react-router-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const { width, height } = Dimensions.get('window')
 
 export default function AddBus() {
+  let history = useHistory()
   const [selectedCity, setSelectedCity] = useState('')
+  const [licenseNumber, setLicenseNumber] = useState('')
+  const [manufacturer, setManufacturer] = useState('')
+  const [modelName, setModelName] = useState('')
+  const [chassisNum, setChassisNum] = useState('')
+  const [year, setYear] = useState()
+  const [capacity, setCapacity] = useState()
+
+  const signUp = async () => {
+    try {
+      const passedBody = await AsyncStorage.getItem('driverSignUpBody')
+      const processedBody = await JSON.parse(passedBody)
+
+      const body = {
+        full_name: processedBody.name,
+        email: processedBody.email,
+        password: processedBody.password,
+        city: processedBody.city,
+        age: processedBody.age,
+        registered: true,
+        manufacturer: manufacturer,
+        reg_num: licenseNumber,
+        year_of_manufacture: year,
+        capacity: capacity,
+        color: 'yellow',
+        model_name: modelName,
+        chassis_num: chassisNum,
+      }
+      const parent = await fetch(
+        'http://192.168.0.101:5000/driver/authentication/register',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+
+      const data = await parent.json()
+
+      if (parent.status == 200) {
+        await AsyncStorage.setItem('driverID', JSON.stringify(data.data.id))
+        await AsyncStorage.setItem('driver_jwt_token', data.token)
+
+        alert('Success!')
+        history.push('/driver-dashboard')
+      } else {
+        alert(data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -42,17 +100,27 @@ export default function AddBus() {
           <Text style={styles.companyText}>bus</Text>
         </View>
       </View>
-      <View style={styles.formContainer}>
+      <ScrollView contentContainerStyle={styles.formContainer}>
         <View style={styles.inputContainer}>
           <Image source={licenseIcon} style={styles.inputIcon} />
-          <TextInput placeholder='License Number' style={styles.input} />
+          <TextInput
+            placeholder='License Number'
+            style={styles.input}
+            value={licenseNumber}
+            onChangeText={(e) => setLicenseNumber(e)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image
             source={industryIcon}
             style={{ width: 24, height: 17, opacity: 0.5 }}
           />
-          <TextInput placeholder='Manufacturer' style={styles.input} />
+          <TextInput
+            placeholder='Manufacturer'
+            style={styles.input}
+            value={manufacturer}
+            onChangeText={(e) => setManufacturer(e)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image source={calendarIcon} style={{ width: 21, height: 23 }} />
@@ -60,6 +128,27 @@ export default function AddBus() {
             placeholder='Manufacturing Year'
             style={styles.input}
             keyboardType={'number-pad'}
+            value={year}
+            onChangeText={(e) => setYear(e)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image source={calendarIcon} style={{ width: 21, height: 23 }} />
+          <TextInput
+            placeholder='Chassis Number'
+            style={styles.input}
+            keyboardType={'number-pad'}
+            value={chassisNum}
+            onChangeText={(e) => setChassisNum(e)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image source={calendarIcon} style={{ width: 21, height: 23 }} />
+          <TextInput
+            placeholder='Model Name'
+            style={styles.input}
+            value={modelName}
+            onChangeText={(e) => setModelName(e)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -95,17 +184,15 @@ export default function AddBus() {
             keyboardType={'number-pad'}
             placeholder='Capacity'
             style={styles.input}
+            value={capacity}
+            onChangeText={(e) => setCapacity(e)}
           />
         </View>
         <View style={styles.inputContainer}></View>
-        <Link
-          to='/driver-dashboard'
-          component={TouchableOpacity}
-          style={styles.buttonContainer}
-        >
+        <TouchableOpacity onPress={signUp} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Finish</Text>
-        </Link>
-      </View>
+        </TouchableOpacity>
+      </ScrollView>
       <StatusBar style='light' />
     </View>
   )

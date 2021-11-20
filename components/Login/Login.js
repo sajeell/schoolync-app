@@ -203,9 +203,6 @@ export default function Login() {
             ]}
           />
         </View>
-        <TouchableOpacity>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer} onPress={proceed}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>

@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { Link } from 'react-router-native'
 
 import logo from '../../assets/PNG_Logo.png'
 
 export default function Menu() {
+  const [parentName, setParentName] = useState('')
+
+  useEffect(async () => {
+    const parent = await AsyncStorage.getItem('parentName')
+    setParentName(parent)
+  }, [])
   return (
     <View style={styles.container}>
       <View style={styles.menuRowContainer}>
         <Text style={styles.subtitle}>Hey,</Text>
-        <Text style={styles.title}>Stephen</Text>
+        <Text style={styles.title}>{parentName}</Text>
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- Home</Text>
         </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
+        <Link component={TouchableOpacity} to='/parent-profile'>
           <Text style={styles.menuItemText}>- Profile</Text>
         </Link>
         <Link component={TouchableOpacity} to='/leave'>

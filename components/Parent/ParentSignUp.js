@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useHistory } from 'react-router'
 import {
   StyleSheet,
   Text,
@@ -18,6 +20,51 @@ import idCardIcon from '../../assets/id-card.png'
 const { width, height } = Dimensions.get('window')
 
 export default function ParentSignUp() {
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [childID, setChildID] = useState(0)
+  let history = useHistory()
+
+  const signUp = async () => {
+    try {
+      const body = {
+        email: email,
+        password: password,
+        name: fullName,
+        childID: childID,
+      }
+
+      const parent = await fetch(
+        'http://192.168.0.101:5000/parent/authentication/register',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
+
+      const data = await parent.json()
+
+      if (data.data == 'No child exists') {
+        alert('No Child Exists')
+        return
+      } else if (data.data == 'Parent already exist!') {
+        alert('Parent Already Exists')
+        return
+      } else {
+        await AsyncStorage.setItem('parentID', JSON.stringify(data.data.id))
+        await AsyncStorage.setItem('parent_jwt_token', data.token)
+        history.push('/add-address')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImageContainer}></View>
@@ -35,14 +82,24 @@ export default function ParentSignUp() {
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <Image source={personIcon} style={styles.inputIcon} />
-          <TextInput placeholder='Full Name' style={styles.input} />
+          <TextInput
+            placeholder='Full Name'
+            style={styles.input}
+            value={fullName}
+            onChangeText={(value) => setFullName(value)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image
             source={emailIcon}
             style={{ width: 24, height: 17, opacity: 0.5 }}
           />
-          <TextInput placeholder='Email Address' style={styles.input} />
+          <TextInput
+            placeholder='Email Address'
+            style={styles.input}
+            value={email}
+            onChangeText={(value) => setEmail(value)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Image source={lockIcon} style={{ width: 19, height: 25 }} />
@@ -50,6 +107,8 @@ export default function ParentSignUp() {
             placeholder='Password'
             style={styles.input}
             secureTextEntry
+            value={password}
+            onChangeText={(value) => setPassword(value)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -57,10 +116,11 @@ export default function ParentSignUp() {
           <TextInput
             placeholder='Child Unique ID'
             style={styles.input}
-            secureTextEntry
+            value={childID}
+            onChangeText={(value) => setChildID(value)}
           />
         </View>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={signUp}>
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
       </View>

@@ -65,6 +65,7 @@ export default function Login() {
 
       if (data.success == true) {
         await AsyncStorage.setItem('parentID', JSON.stringify(data.data[0].id))
+        await AsyncStorage.setItem('parentName', data.data[0].name)
         await AsyncStorage.setItem('parentAddress', data.data[0].address)
         await AsyncStorage.setItem('parent_jwt_token', data.token)
         history.push('/parent-dashboard')

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { Link } from 'react-router-native'
+import { useHistory } from 'react-router-native'
 
 import moment from 'moment'
 import { Calendar } from 'react-native-calendars'
@@ -11,8 +12,9 @@ import Header from '../Header/Header'
 
 export default function CalendarComponent() {
   const [markedDates, setMarkedDates] = useState({})
-
-  const handleDayPress = (day) => {
+  let history = useHistory()
+  const handleDayPress = async (day) => {
+    await AsyncStorage.setItem('date', day.dateString)
     setMarkedDates({
       [day.dateString]: {
         startingDay: true,
@@ -26,7 +28,7 @@ export default function CalendarComponent() {
 
   return (
     <View style={styles.container}>
-      <Header back={true} backURL={"/parent-dashboard"}/>
+      <Header back={true} backURL={'/parent-dashboard'} />
       <View style={styles.contentContainer}>
         <View>
           <Text style={styles.heading}>Choose Date</Text>
@@ -40,9 +42,18 @@ export default function CalendarComponent() {
             onDayPress={handleDayPress}
           />
         </View>
-        <Link style={styles.button} component={TouchableOpacity} to='/leave'>
+        <TouchableOpacity
+          onPress={async () => {
+            const date = await AsyncStorage.getItem('date')
+
+            if (date !== '' && date !== null) {
+              history.push('/leave')
+            }
+          }}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Apply For Leave</Text>
-        </Link>
+        </TouchableOpacity>
       </View>
       <Footer calendar={true} />
     </View>

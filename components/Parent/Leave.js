@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   Image,
@@ -8,7 +8,8 @@ import {
   TextInput,
 } from 'react-native'
 
-import { Link } from 'react-router-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useHistory } from 'react-router-native'
 
 import { CheckBox } from 'react-native-elements'
 
@@ -16,8 +17,53 @@ import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
 export default function Leave() {
+  let history = useHistory()
+
   const [toggleMorningCheckBox, setToggleMorningCheckBox] = useState(false)
   const [toggleEveningCheckBox, setToggleEveningCheckBox] = useState(false)
+
+  const [comments, setComments] = useState('')
+
+  const [date, setDate] = useState('')
+
+  const submitLeave = async () => {
+    try {
+      const parentID = await AsyncStorage.getItem('parentID')
+
+      if (toggleEveningCheckBox === false && toggleMorningCheckBox === false) {
+        alert('Select at least one time')
+        return
+      }
+
+      const body = {
+        parentID: parentID,
+        morning: toggleEveningCheckBox,
+        evening: toggleEveningCheckBox,
+        comments: comments,
+      }
+
+      const leaveResponse = await fetch('http://192.168.0.101:5000/leave', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+
+      if (leaveResponse.status == 200) {
+        history.push('/parent-dashboard')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(async () => {
+    const dateIntent = await AsyncStorage.getItem('date')
+    setDate(dateIntent)
+  }, [])
+
   return (
     <View style={styles.container}>
       <Header back={true} backURL={'/parent-dashboard'} />
@@ -26,10 +72,7 @@ export default function Leave() {
 
         <Text style={styles.mainText}>
           No ride for
-          <Text style={{ fontFamily: 'Nunito_700Bold' }}>
-            {' '}
-            12th October, 2021
-          </Text>
+          <Text style={{ fontFamily: 'Nunito_700Bold' }}> {date}</Text>
         </Text>
         <View style={styles.checkBoxContainer}>
           <CheckBox
@@ -66,14 +109,18 @@ export default function Leave() {
         </View>
         <View style={{ marginTop: 20 }}></View>
         <Text style={styles.mainText}>Leave Comments</Text>
-        <TextInput style={styles.comments} />
-        <Link
-          style={styles.button}
-          component={TouchableOpacity}
-          to='/parent-dashboard'
-        >
+        <TextInput
+          style={styles.comments}
+          scrollEnabled
+          multiline
+          textAlign='left'
+          onChangeText={(e) => {
+            setComments(e)
+          }}
+        />
+        <TouchableOpacity style={styles.button} onPress={submitLeave}>
           <Text style={styles.buttonText}>Apply</Text>
-        </Link>
+        </TouchableOpacity>
       </View>
       <Footer calendar={true} />
     </View>
@@ -123,7 +170,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 10,
-    height: 250,
+    height: 150,
+    paddingBottom: 100,
+    paddingTop: 10,
+    paddingLeft: 10,
   },
   button: {
     alignSelf: 'center',

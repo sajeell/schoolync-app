@@ -32,7 +32,7 @@ import OnGoingTrip from './components/Parent/OnGoingTrip'
 import TrackTrip from './components/Parent/TrackTrip'
 import CalendarComponent from './components/Parent/Calendar'
 import Leave from './components/Parent/Leave'
-// import Notifications from './components/Parent/Notifications'
+import NotificationComponent from './components/Parent/Notifications'
 import Menu from './components/Parent/Menu'
 import AddBus from './components/Driver/AddBus'
 import MarkStudents from './components/Driver/MarkStudents'
@@ -40,6 +40,7 @@ import StudentDirection from './components/Driver/StudentDirections'
 import DriverDashboard from './components/Driver/DriverDashboard'
 import FAQ from './components/Parent/FAQ'
 import SchoolDirection from './components/Driver/SchoolDirection'
+import ParentProfile from './components/Parent/Profile'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -139,6 +140,11 @@ export default function App() {
       <View style={styles.container}>
         <Route exact path='/'>
           <Login />
+          {/* <NotificationComponent /> */}
+        </Route>
+        <Route exact path='/parent-profile'>
+          <ParentProfile />
+          {/* <NotificationComponent /> */}
         </Route>
         <Route path='/select-type'>
           <SelectType />
@@ -179,9 +185,9 @@ export default function App() {
         <Route exact path='/driver-mark-students'>
           <MarkStudents />
         </Route>
-        {/* <Route exact path='/notifications'>
-          <Notifications />
-        </Route> */}
+        <Route exact path='/notifications'>
+          <NotificationComponent />
+        </Route>
         <Route exact path='/menu'>
           <Menu />
         </Route>

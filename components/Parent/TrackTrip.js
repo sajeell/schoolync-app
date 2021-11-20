@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import {
   StyleSheet,
@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Platform,
+  Linking,
 } from 'react-native'
 import { Link } from 'react-router-native'
 
@@ -18,9 +20,100 @@ import backArrow from '../../assets/map-back.png'
 import blueMarker from '../../assets/blue-marker.png'
 import redMarker from '../../assets/red-marker.png'
 import busMap from '../../assets/map-bus.png'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function TrackTrip() {
   const [visible, setVisible] = useState(false)
+  const [driverName, setDriverName] = useState('')
+  const [driverPhone, setDriverPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [tripCreatedTime, setTripCreatedTime] = useState('')
+  const [tripUpdatedTime, setTripUpdatedTime] = useState('')
+
+  const [tripData, setTripData] = useState({})
+  const [location, setLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  })
+
+  const getTripData = async () => {
+    try {
+      getParentData()
+      const currentLocation = await fetch(
+        `http://192.168.0.101:5000/trip/current_location/${1}`
+      )
+
+      const data = await currentLocation.json()
+
+      setLocation(data.data[0].current_location)
+
+      const created = data.data[0].createdAt
+      const updated = data.data[0].updatedAt
+
+      const dateCreated = new Date(created)
+      const dateUpdated = new Date(updated)
+
+      setTripCreatedTime(
+        `${dateCreated.getHours()} : ${dateCreated.getMinutes()}`
+      )
+
+      setTripUpdatedTime(
+        `${dateUpdated.getHours()} : ${dateUpdated.getMinutes()}`
+      )
+
+      setDriverName(data.data[0].Driver.name)
+      setDriverPhone(data.data[0].Driver.phone)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const getParentData = async () => {
+    try {
+      const parentID = await AsyncStorage.getItem('parentID')
+      const currentLocation = await fetch(
+        `http://192.168.0.101:5000/admin/child/${parentID}`
+      )
+
+      const data = await currentLocation.json()
+
+      setAddress(data.data[0].Parent.address)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleCall = (phone) => {
+    try {
+      let phoneNumber = phone
+      if (Platform.OS !== 'android') {
+        phoneNumber = `telprompt:${phone}`
+      } else {
+        phoneNumber = `tel:${phone}`
+      }
+      Linking.openURL(phoneNumber)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleText = (phone) => {
+    try {
+      let phoneNumber = phone
+      if (Platform.OS !== 'android') {
+        phoneNumber = `sms:${phone}`
+      } else {
+        phoneNumber = `sms:${phone}`
+      }
+      Linking.openURL(phoneNumber)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getTripData()
+  }, [])
 
   const toggleOverlay = () => {
     setVisible(!visible)
@@ -37,48 +130,24 @@ export default function TrackTrip() {
       </Link>
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: 39.97343096953564,
+        region={{
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.0922,
-          longitude: -75.12520805829233,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
           key={1}
-          title={'Hello'}
-          description={'Blah blah'}
+          title={'Bus'}
+          description={'Updated 1s ago'}
           coordinate={{
-            latitude: 39.97343096953564,
+            latitude: location.latitude,
+            longitude: location.longitude,
             latitudeDelta: 0.0922,
-            longitude: -75.12520805829233,
-            longitudeDelta: 0.0421,
-          }}
-          image={blueMarker}
-        />
-        <Marker
-          key={2}
-          title={'Hello'}
-          description={'Blah blah'}
-          coordinate={{
-            latitude: 39.97343096953564,
-            latitudeDelta: 0.0922,
-            longitude: -75.5920805829233,
             longitudeDelta: 0.0421,
           }}
           image={busMap}
-        />
-        <Marker
-          key={3}
-          title={'Hello'}
-          description={'Blah blah'}
-          coordinate={{
-            latitude: 39.973430969539,
-            latitudeDelta: 0.0922,
-            longitude: -75.92820805829233,
-            longitudeDelta: 0.0421,
-          }}
-          image={redMarker}
         />
       </MapView>
       <View style={styles.contentContainer}>
@@ -89,7 +158,7 @@ export default function TrackTrip() {
             <View style={styles.sourceBox}>
               <View style={styles.sourceInnerBox}></View>
             </View>
-            <Text style={styles.timeText}>11:00 AM</Text>
+            <Text style={styles.timeText}>{tripCreatedTime}</Text>
             <Text style={styles.locationText}>
               Headstart School, 8th Street
             </Text>
@@ -103,16 +172,14 @@ export default function TrackTrip() {
             <View style={styles.destinationBox}>
               <View style={styles.destinationInnerBox}></View>
             </View>
-            <Text style={styles.timeText}>11:00 AM</Text>
-            <Text style={styles.locationText}>
-              Headstart School, 8th Street
-            </Text>
+            <Text style={styles.timeText}>{tripUpdatedTime}</Text>
+            <Text style={styles.locationText}>{address}</Text>
           </View>
         </View>
         <View style={styles.etaContainer}>
           <View style={styles.row}>
             <Text style={styles.etaHeading}>Driver Name:</Text>
-            <Text style={styles.etaContent}>David Gustavo</Text>
+            <Text style={styles.etaContent}>{driverName}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.etaHeading}>ETA:</Text>
@@ -131,12 +198,22 @@ export default function TrackTrip() {
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <View style={styles.overlay}>
           <Text style={styles.overlayHeading}>Driver Information</Text>
-          <Text style={styles.overlayText}>Driver Name: Gustavo Gaviria</Text>
-          <Text style={styles.overlayText}>012 345 678</Text>
-          <TouchableOpacity style={styles.callButton}>
+          <Text style={styles.overlayText}>Driver Name: {driverName}</Text>
+          <Text style={styles.overlayText}>{driverPhone}</Text>
+          <TouchableOpacity
+            style={styles.callButton}
+            onPress={() => {
+              handleCall(driverPhone)
+            }}
+          >
             <Text style={styles.callButtonText}>CALL</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.messageButton}>
+          <TouchableOpacity
+            style={styles.messageButton}
+            onPress={() => {
+              handleText(driverPhone)
+            }}
+          >
             <Text style={styles.messageButtonText}>MESSAGE</Text>
           </TouchableOpacity>
         </View>

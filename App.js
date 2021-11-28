@@ -42,6 +42,7 @@ import FAQ from './components/Parent/FAQ'
 import SchoolDirection from './components/Driver/SchoolDirection'
 import ParentProfile from './components/Parent/Profile'
 import Success from './components/Success/Success'
+import Header from './components/Driver/Header'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -140,9 +141,10 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Route exact path='/'>
-          <Login />
+          {/* <Login /> */}
           {/* <NotificationComponent /> */}
           {/* <Success /> */}
+          <Header />
         </Route>
         <Route exact path='/parent-profile'>
           <ParentProfile />

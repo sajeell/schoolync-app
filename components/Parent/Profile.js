@@ -22,7 +22,7 @@ export default function ParentProfile() {
 
       if (parentID) {
         const parent = await fetch(
-          `http://192.168.0.101:5000/admin/parent/${parseInt(parentID)}`
+          `https://schoolync-backend.herokuapp.com/admin/parent/${parseInt(parentID)}`
         )
 
         const data = await parent.json()
@@ -46,7 +46,7 @@ export default function ParentProfile() {
         const body = { fullName, address }
 
         const parent = await fetch(
-          `http://192.168.0.101:5000/admin/parent/${parseInt(parentID)}`,
+          `https://schoolync-backend.herokuapp.com/admin/parent/${parseInt(parentID)}`,
           {
             method: 'PUT',
             headers: {

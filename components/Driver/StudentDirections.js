@@ -72,7 +72,7 @@ export default function StudentDirection() {
         status: attendanceStatus,
       }
 
-      const attendance = await fetch('http://192.168.0.101:5000/attendance', {
+      const attendance = await fetch('https://schoolync-backend.herokuapp.com/attendance', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

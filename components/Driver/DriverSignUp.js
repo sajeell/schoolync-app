@@ -60,7 +60,7 @@ export default function DriverSignUp() {
       history.push('/add-bus')
 
       // const parent = await fetch(
-      //   'http://192.168.0.101:5000/driver/authentication/register',
+      //   'https://schoolync-backend.herokuapp.com/driver/authentication/register',
       //   {
       //     method: 'POST',
       //     headers: {

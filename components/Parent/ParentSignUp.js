@@ -36,7 +36,7 @@ export default function ParentSignUp() {
       }
 
       const parent = await fetch(
-        'http://192.168.0.101:5000/parent/authentication/register',
+        'https://schoolync-backend.herokuapp.com/parent/authentication/register',
         {
           method: 'POST',
           headers: {

@@ -63,7 +63,7 @@ export default function MarkStudents() {
         method: 'GET',
       }
       const driverID = await AsyncStorage.getItem('driverID')
-      fetch(`http://192.168.0.101:5000/trip/${driverID}`, requestOptions)
+      fetch(`https://schoolync-backend.herokuapp.com/trip/${driverID}`, requestOptions)
         .then((response) => response.text())
         .then((result) => {
           if (JSON.parse(result).data[0].current_status === 'on-my-way') {
@@ -105,7 +105,7 @@ export default function MarkStudents() {
 
       const body = { driver_id: driverID, current_status: status }
       const tripUpdate = await fetch(
-        'http://192.168.0.101:5000/trip/update_status',
+        'https://schoolync-backend.herokuapp.com/trip/update_status',
         {
           method: 'PUT',
           headers: {

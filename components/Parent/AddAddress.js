@@ -34,7 +34,7 @@ export default function AddAddress() {
         return
       }
       const update = await fetch(
-        `http://192.168.0.101:5000/admin/parent/${parseInt(parentID)}`,
+        `https://schoolync-backend.herokuapp.com/admin/parent/${parseInt(parentID)}`,
         {
           method: 'PUT',
           headers: {

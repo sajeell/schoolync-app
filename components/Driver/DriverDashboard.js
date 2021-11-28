@@ -21,7 +21,7 @@ export default function DriverDashboard() {
   const checkExistingTrip = async () => {
     try {
       const driverID = await AsyncStorage.getItem('driverID')
-      const trip = await fetch(`http://192.168.0.101:5000/trip/${driverID}`)
+      const trip = await fetch(`https://schoolync-backend.herokuapp.com/trip/${driverID}`)
       const data = await trip.json()
 
       if (data.data.length !== 0) {
@@ -41,7 +41,7 @@ export default function DriverDashboard() {
         current_location: {},
         current_status: 'started',
       }
-      const trip = await fetch(`http://192.168.0.101:5000/trip/`, {
+      const trip = await fetch(`https://schoolync-backend.herokuapp.com/trip/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',

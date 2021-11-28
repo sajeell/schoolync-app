@@ -26,7 +26,7 @@ export default function Notifications() {
 
   const getAlerts = async () => {
     try {
-      const alerts = await fetch('http://192.168.0.101:5000/alert')
+      const alerts = await fetch('https://schoolync-backend.herokuapp.com/alert')
 
       const alertsData = await alerts.json()
 
@@ -40,7 +40,7 @@ export default function Notifications() {
     try {
       const parentID = await AsyncStorage.getItem('parentID')
       const notifications = await fetch(
-        `http://192.168.0.101:5000/leave/${parentID}`
+        `https://schoolync-backend.herokuapp.com/leave/${parentID}`
       )
 
       const notificationsData = await notifications.json()

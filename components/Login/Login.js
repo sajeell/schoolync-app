@@ -100,7 +100,7 @@ export default function Login() {
 
       const body = { email, password }
       const response = await fetch(
-        'http://192.168.0.101:5000/driver/authentication/login',
+        'https://schoolync-backend.herokuapp.com/driver/authentication/login',
         {
           method: 'POST',
           headers: {

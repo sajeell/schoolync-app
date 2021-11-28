@@ -42,7 +42,7 @@ export default function Leave() {
         comments: comments,
       }
 
-      const leaveResponse = await fetch('http://192.168.0.101:5000/leave', {
+      const leaveResponse = await fetch('https://schoolync-backend.herokuapp.com/leave', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

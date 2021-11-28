@@ -40,7 +40,7 @@ export default function TrackTrip() {
     try {
       getParentData()
       const currentLocation = await fetch(
-        `http://192.168.0.101:5000/trip/current_location/${1}`
+        `https://schoolync-backend.herokuapp.com/trip/current_location/${1}`
       )
 
       const data = await currentLocation.json()
@@ -72,7 +72,7 @@ export default function TrackTrip() {
     try {
       const parentID = await AsyncStorage.getItem('parentID')
       const currentLocation = await fetch(
-        `http://192.168.0.101:5000/admin/child/${parentID}`
+        `https://schoolync-backend.herokuapp.com/admin/child/${parentID}`
       )
 
       const data = await currentLocation.json()

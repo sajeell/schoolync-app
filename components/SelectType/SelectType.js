@@ -12,23 +12,24 @@ import { Link } from 'react-router-native'
 import buttonBg from '../../assets/button-bg.png'
 import driverIcon from '../../assets/driver.png'
 import parentIcon from '../../assets/parents.png'
-import schoolIcon from '../../assets/school.png'
+import driverIllustration from '../../assets/driver-select-type.png'
+// import motherHugIllustration from '../../assets/mother-hug.png'
+import motherHugIllustration from '../../assets/father-hug.png'
 
 const { width, height } = Dimensions.get('window')
 
 export default function SelectType() {
   return (
     <View style={styles.container}>
-      <View style={styles.backgroundImageContainer}></View>
       <Link component={TouchableOpacity} to='/' style={styles.backContainer}>
-        <Text style={styles.backText}>← Back</Text>
+        <Text style={styles.backText}>{'<'} Back</Text>
       </Link>
       <View style={styles.welcomeContainer}>
         <View>
-          <Text style={styles.welcomeText}>here's where</Text>
+          <Text style={styles.welcomeText}>Select</Text>
         </View>
         <View>
-          <Text style={styles.companyText}>it begins</Text>
+          <Text style={styles.companyText}>user type</Text>
         </View>
       </View>
       <View style={styles.buttonsContainer}>
@@ -38,36 +39,29 @@ export default function SelectType() {
           style={styles.buttonContainer}
           delayPressIn={0}
         >
-          <Image source={buttonBg} style={styles.leftGreenBg}></Image>
-          <View style={styles.roundContainer}>
-            <View style={styles.innerRound}>
-              <Image source={driverIcon} style={styles.innerIcon}></Image>
-            </View>
-          </View>
+          <Image
+            source={driverIllustration}
+            style={{ width: 138, height: 138 }}
+          />
           <View style={styles.rightContentContainer}>
-            <Text style={styles.rowOne}>I am a</Text>
-            <Text style={styles.rowTwo}>Driver</Text>
-            <Text style={styles.rowThree}>→</Text>
+            <Text style={styles.rowOne}>Driver</Text>
+            <Text style={styles.rowTwo}>You will be taking trips</Text>
           </View>
         </Link>
         <Link
           to='/parent-signup'
           component={TouchableOpacity}
-          style={styles.buttonContainer}
+          style={styles.parentButtonContainer}
         >
-          <Image source={buttonBg} style={styles.leftGreenBg}></Image>
-          <View style={styles.roundContainer}>
-            <View style={styles.innerRound}>
-              <Image
-                source={parentIcon}
-                style={{ width: 26, height: 18 }}
-              ></Image>
-            </View>
-          </View>
+          <Image
+            source={motherHugIllustration}
+            style={{ width: 120, height: 138 }}
+          />
           <View style={styles.rightContentContainer}>
-            <Text style={styles.rowOne}>I am a</Text>
-            <Text style={styles.rowTwo}>Parent</Text>
-            <Text style={styles.rowThree}>→</Text>
+            <Text style={styles.rowOne}>Parent</Text>
+            <Text style={styles.rowTwo}>
+              You will be monitoring child's trips
+            </Text>
           </View>
         </Link>
       </View>
@@ -98,36 +92,36 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontFamily: 'Nunito_400Regular',
-    color: 'white',
+    color: 'black',
+    fontSize: 16,
   },
   welcomeContainer: {
-    marginTop: '5%',
+    marginTop: '10%',
     marginLeft: '10%',
   },
   welcomeText: {
-    fontSize: 25,
-    color: 'white',
+    fontSize: 32,
+    color: 'black',
     letterSpacing: 2,
-    fontFamily: 'Nunito_200ExtraLight',
+    fontFamily: 'Nunito_700Bold',
     fontWeight: '100',
   },
   companyText: {
     fontFamily: 'Nunito_700Bold',
-    fontSize: 25,
+    fontSize: 32,
     letterSpacing: 2,
-    color: 'white',
+    color: 'black',
   },
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'space-evenly',
     height: '75%',
-    marginTop: 30,
     alignSelf: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#CFFAF5',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -136,10 +130,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: 280,
+    width: 343,
     maxWidth: '80%',
-    height: 150,
-    borderRadius: 15,
+    height: 161,
+    borderRadius: 17,
+  },
+  parentButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#B3F8EF',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    width: 343,
+    maxWidth: '80%',
+    height: 161,
+    borderRadius: 17,
+    paddingLeft: 20,
   },
   leftGreenBg: {
     height: '100%',
@@ -183,12 +195,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   rowOne: {
-    fontFamily: 'Nunito_200ExtraLight',
-    fontSize: 17,
+    fontFamily: 'Nunito_700Bold',
+    fontSize: 28,
+    marginBottom: 25,
   },
   rowTwo: {
-    fontFamily: 'Nunito_700Bold',
-    fontSize: 19,
+    fontFamily: 'Nunito_400Regular',
+    fontSize: 15,
+    maxWidth: 134,
   },
   rowThree: {
     fontFamily: 'Nunito_700Bold',

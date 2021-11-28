@@ -11,9 +11,11 @@ import {
 import { Link, useHistory } from 'react-router-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import RNPickerSelect from 'react-native-picker-select'
+import { LinearGradient } from 'expo-linear-gradient'
 
 import emailIcon from '../../assets/email.png'
 import lockIcon from '../../assets/lock.png'
+import signInIllustration from '../../assets/signin-illustration.jpg'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -125,15 +127,16 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.backgroundImageContainer}></View>
-      <View style={styles.welcomeContainer}>
-        <View>
-          <Text style={styles.welcomeText}>Welcome to</Text>
-        </View>
-        <View>
-          <Text style={styles.companyText}>SchooLYNC</Text>
-        </View>
-      </View>
+      {/* <View style={styles.backgroundImageContainer}></View> */}
+      <Image
+        source={signInIllustration}
+        style={{
+          width: 256,
+          height: 182,
+          alignSelf: 'center',
+          marginTop: '25%',
+        }}
+      />
       <View style={styles.formContainer}>
         <View style={styles.heading}>
           <Text style={styles.headingText}>Sign In</Text>
@@ -203,8 +206,13 @@ export default function Login() {
             ]}
           />
         </View>
-        <TouchableOpacity style={styles.buttonContainer} onPress={proceed}>
-          <Text style={styles.buttonText}>Sign In</Text>
+        <TouchableOpacity onPress={proceed}>
+          <LinearGradient
+            colors={['#656BE7', '#8D37F5']}
+            style={styles.buttonContainer}
+          >
+            <Text style={styles.buttonText}>Sign In</Text>
+          </LinearGradient>
         </TouchableOpacity>
         <View style={styles.bottomTextContainer}>
           <Text style={styles.bottomText}>Don't have an account? Click</Text>
@@ -217,23 +225,12 @@ export default function Login() {
   )
 }
 
-const greenColor = '#00B966'
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
   },
-  backgroundImageContainer: {
-    width: '100%',
-    height: 450,
-    backgroundColor: greenColor,
-    borderBottomRightRadius: 200,
-    borderBottomLeftRadius: 120,
-    position: 'absolute',
-  },
   welcomeContainer: {
-    marginTop: '25%',
     marginLeft: '10%',
   },
   welcomeText: {
@@ -251,12 +248,13 @@ const styles = StyleSheet.create({
   formContainer: {
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#AEF8EE',
     borderRadius: 20,
+    marginTop: 30,
     width: 320,
     maxWidth: '90%',
-    paddingVertical: '12%',
-    marginTop: '20%',
+    paddingBottom: '12%',
+    paddingTop: '8%',
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: {
@@ -275,14 +273,15 @@ const styles = StyleSheet.create({
   headingText: {
     fontFamily: 'Nunito_700Bold',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 32,
+    color: 'black',
   },
   inputFieldContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderWidth: 0.5,
+    borderWidth: 0,
     borderColor: '#000',
     height: 50,
     borderRadius: 10,
@@ -341,9 +340,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     maxWidth: '90%',
     width: 270,
-    height: 45,
-    backgroundColor: greenColor,
-    borderRadius: 10,
+    height: 50,
+    // backgroundColor: greenColor,
+    borderRadius: 14,
     marginTop: 20,
     zIndex: -1,
   },

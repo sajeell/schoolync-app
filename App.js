@@ -140,9 +140,9 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Route exact path='/'>
-          {/* <Login /> */}
+          <Login />
           {/* <NotificationComponent /> */}
-          <Success />
+          {/* <Success /> */}
         </Route>
         <Route exact path='/parent-profile'>
           <ParentProfile />

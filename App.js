@@ -144,7 +144,8 @@ export default function App() {
           {/* <Login /> */}
           {/* <NotificationComponent /> */}
           {/* <Success /> */}
-          <Header />
+          {/* <Header /> */}
+          <MarkStudents />
         </Route>
         <Route exact path='/parent-profile'>
           <ParentProfile />

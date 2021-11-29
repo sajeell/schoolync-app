@@ -15,17 +15,20 @@ import { Link } from 'react-router-native'
 import { Overlay } from 'react-native-elements'
 
 import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 
 import backArrow from '../../assets/map-back.png'
 import blueMarker from '../../assets/blue-marker.png'
 import redMarker from '../../assets/red-marker.png'
 import busMap from '../../assets/map-bus.png'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import studentTrip from '../../assets/student-trip.png'
 
 export default function TrackTrip() {
   const [visible, setVisible] = useState(false)
   const [driverName, setDriverName] = useState('')
   const [driverPhone, setDriverPhone] = useState('')
+  const [studentName, setStudentName] = useState('')
   const [address, setAddress] = useState('')
   const [tripCreatedTime, setTripCreatedTime] = useState('')
   const [tripUpdatedTime, setTripUpdatedTime] = useState('')
@@ -78,6 +81,7 @@ export default function TrackTrip() {
       const data = await currentLocation.json()
 
       setAddress(data.data[0].Parent.address)
+      setStudentName(data.data[0].name)
     } catch (error) {
       console.error(error)
     }
@@ -121,80 +125,132 @@ export default function TrackTrip() {
 
   return (
     <View style={styles.container}>
-      <Link
-        style={styles.backArrow}
-        component={TouchableOpacity}
-        to='/ongoing-trip'
-      >
-        <Image source={backArrow} />
-      </Link>
+      <Header
+        back={true}
+        backURL={'/driver-mark-students'}
+        pageName='Student Direction'
+      />
       <MapView
         style={styles.map}
         region={{
           latitude: location.latitude,
           longitude: location.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
         }}
+        showsUserLocation
+        onUserLocationChange={getTripData}
       >
+        {/* <MapViewDirections
+          origin={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+          }}
+          destination={{ latitude: studentLat, longitude: studentLong }}
+          apikey={'AIzaSyAEjvtIWPMH5ru26LtCo0ai6lH6aZ9QGuc'} // insert your API Key here
+          strokeWidth={6}
+          strokeColor='rgba(0, 185, 102, 255)'
+          lineDashPattern={[0]}
+        /> */}
         <Marker
           key={1}
-          title={'Bus'}
-          description={'Updated 1s ago'}
+          title={'Trip Location'}
+          description={`Trip Location`}
           coordinate={{
             latitude: location.latitude,
             longitude: location.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
           }}
           image={busMap}
         />
       </MapView>
-      <View style={styles.contentContainer}>
-        <View style={styles.line}></View>
-        <Text style={styles.heading}>Your Child's Trip</Text>
-        <View style={styles.statusContainer}>
-          <View style={styles.sourceStatus}>
-            <View style={styles.sourceBox}>
-              <View style={styles.sourceInnerBox}></View>
-            </View>
-            <Text style={styles.timeText}>{tripCreatedTime}</Text>
-            <Text style={styles.locationText}>
-              Headstart School, 8th Street
-            </Text>
-          </View>
-          <View style={{ flex: 0, paddingVertical: 0 }}>
-            <View style={styles.statusLine}></View>
-            <View style={styles.statusLine}></View>
-            <View style={styles.statusLine}></View>
-          </View>
-          <View style={styles.destinationStatus}>
-            <View style={styles.destinationBox}>
-              <View style={styles.destinationInnerBox}></View>
-            </View>
-            <Text style={styles.timeText}>{tripUpdatedTime}</Text>
-            <Text style={styles.locationText}>{address}</Text>
-          </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          zIndex: 1000,
+          marginTop: -150,
+        }}
+      >
+        <View
+          style={{
+            alignItems: 'flex-start',
+            paddingStart: 11,
+            paddingTop: 9,
+            width: 145,
+            height: 142,
+            borderRadius: 10,
+            backgroundColor: '#00978E',
+          }}
+        >
+          <Image
+            style={{
+              width: 124,
+              height: 124,
+            }}
+            source={studentTrip}
+          />
         </View>
-        <View style={styles.etaContainer}>
-          <View style={styles.row}>
-            <Text style={styles.etaHeading}>Driver Name:</Text>
-            <Text style={styles.etaContent}>{driverName}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.etaHeading}>ETA:</Text>
-            <Text style={styles.etaContent}>15 Minutes</Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-          <Text style={styles.contactDriverText}>
-            Want to contact driver? Click{' '}
+        <View
+          style={{
+            alignItems: 'flex-start',
+            paddingStart: 17,
+            paddingTop: 23,
+            marginStart: -6,
+            paddingRight: 10,
+            marginTop: 30,
+            width: '65%',
+            height: 94,
+            backgroundColor: '#00978E',
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: 'Nunito_400Regular',
+              fontWeight: 'bold',
+              fontSize: 14,
+              letterSpacing: 2,
+              color: 'rgba(255, 255, 255, 255)',
+            }}
+          >
+            {' '}
+            {studentName}{' '}
           </Text>
-          <TouchableOpacity onPress={toggleOverlay}>
-            <Text style={styles.hereText}>here</Text>
-          </TouchableOpacity>
+          <Text
+            style={{
+              fontFamily: 'Nunito_400Regular',
+              fontSize: 10,
+              letterSpacing: 2,
+              textAlign: 'center',
+              color: 'rgba(255, 255, 255, 255)',
+              marginTop: 3,
+            }}
+          >
+            {' '}
+            {address}{' '}
+          </Text>
+          <Text
+            style={{
+              fontFamily: 'Nunito_700Bold',
+              fontSize: 11,
+              letterSpacing: 2,
+              textAlign: 'right',
+              alignSelf: 'flex-end',
+              color: 'rgba(255, 255, 255, 255)',
+              marginTop: 9,
+            }}
+          >
+            ETA.45 Minutes
+          </Text>
         </View>
       </View>
+      <Link
+        component={TouchableOpacity}
+        style={styles.button}
+        onPress={toggleOverlay}
+      >
+        <Text style={styles.buttonText}>CONTACT DRIVER</Text>
+      </Link>
+
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <View style={styles.overlay}>
           <Text style={styles.overlayHeading}>Driver Information</Text>
@@ -218,6 +274,7 @@ export default function TrackTrip() {
           </TouchableOpacity>
         </View>
       </Overlay>
+
       <Footer />
     </View>
   )
@@ -238,8 +295,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get('window').width,
-    height: '50%',
-    position: 'absolute',
+    height: '75%',
   },
   contentContainer: {
     height: '50%',
@@ -400,5 +456,20 @@ const styles = StyleSheet.create({
   messageButtonText: {
     color: '#2B88C6',
     fontSize: 16,
+  },
+  button: {
+    alignSelf: 'center',
+    width: '100%',
+    height: 55,
+    backgroundColor: '#00978E',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  buttonText: {
+    fontFamily: 'Nunito_700Bold',
+    color: 'white',
+    fontSize: 15,
   },
 })

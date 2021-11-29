@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 50,
-    backgroundColor: greenColor,
+    backgroundColor: '#00978E',
   },
 })

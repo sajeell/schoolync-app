@@ -117,6 +117,7 @@ export default function Login() {
       if (data.success == true) {
         await AsyncStorage.clear()
         await AsyncStorage.setItem('driverID', JSON.stringify(data.data[0].id))
+        await AsyncStorage.setItem('driverName', data.data[0].name)
         await AsyncStorage.setItem('driver_jwt_token', data.token)
         history.push('/driver-dashboard')
       }

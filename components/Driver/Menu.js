@@ -1,35 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { Link } from 'react-router-native'
 
 import logo from '../../assets/PNG_Logo.png'
+import avatar from '../../assets/driver-avatar.png'
 
 export default function Menu() {
+  const [parentName, setParentName] = useState('')
+
+  useEffect(async () => {
+    const parent = await AsyncStorage.getItem('driverName')
+    setParentName(parent)
+  }, [])
   return (
     <View style={styles.container}>
       <View style={styles.menuRowContainer}>
+        <Image source={avatar} style={{ width: 96, height: 96, left: -20 }} />
         <Text style={styles.subtitle}>Hey,</Text>
-        <Text style={styles.title}>Stephen</Text>
+        <Text style={styles.title}>{parentName}</Text>
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- Home</Text>
         </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
+        <Link component={TouchableOpacity} to='/parent-profile'>
           <Text style={styles.menuItemText}>- Profile</Text>
         </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
-          <Text style={styles.menuItemText}>- Child's Profile</Text>
-        </Link>
-        <Link component={TouchableOpacity} to='/leave'>
-          <Text style={styles.menuItemText}>- Apply For Leave</Text>
-        </Link>
-        <Link component={TouchableOpacity} to='/notifications'>
-          <Text style={styles.menuItemText}>- Alerts & Notifications</Text>
-        </Link>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
+        <Link component={TouchableOpacity} to='/faq'>
           <Text style={styles.menuItemText}>- FAQ</Text>
         </Link>
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- About Us</Text>
+        </Link>
+        <Link component={TouchableOpacity} to='/'>
+          <Text style={styles.menuItemText}>- Log Out</Text>
         </Link>
       </View>
       <Image source={logo} style={styles.menuImage} />

@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native'
 import { Link } from 'react-router-native'
+import { Overlay } from 'react-native-elements'
 
 import logo from '../../assets/org-logo.png'
+import Menu from './Menu'
 export default function Header(props) {
+  const [visible, setVisible] = useState(false)
+
+  const toggleOverlay = () => {
+    setVisible(!visible)
+  }
   return (
     <View style={styles.container}>
       <Image source={logo} style={styles.upperBG} />
@@ -15,13 +22,38 @@ export default function Header(props) {
         ) : (
           <Text style={styles.temp}></Text>
         )}
-        <Text style={styles.pageName}>Mark Attendance</Text>
-        <View style={styles.menuIconContainer}>
+        <Text style={styles.pageName}>
+          {props.pageName ? props.pageName : 'Mark Attendance'}
+        </Text>
+        <TouchableOpacity
+          style={styles.menuIconContainer}
+          onPress={toggleOverlay}
+        >
           <View style={styles.menuIconOne}></View>
           <View style={styles.menuIconTwo}></View>
           <View style={styles.menuIconThree}></View>
-        </View>
+        </TouchableOpacity>
       </View>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={{
+          alignSelf: 'flex-start',
+          backgroundColor: 'transparent',
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <View
+          style={{
+            alignSelf: 'flex-start',
+            marginTop: 0,
+            paddingTop: 0,
+          }}
+        >
+          <Menu />
+        </View>
+      </Overlay>
     </View>
   )
 }

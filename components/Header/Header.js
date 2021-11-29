@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native'
-import { Overlay } from 'react-native-elements'
 import { Link } from 'react-router-native'
 
-import upperBG from '../../assets/up-bg.png'
-import Menu from '../Parent/Menu'
+import { Overlay } from 'react-native-elements'
 
+import logo from '../../assets/org-logo.png'
+import Menu from '../Parent/Menu'
 export default function Header(props) {
   const [visible, setVisible] = useState(false)
 
@@ -14,26 +14,26 @@ export default function Header(props) {
   }
   return (
     <View style={styles.container}>
-      <View style={{ display: 'flex', flexDirection: 'row' }}>
+      <Image source={logo} style={styles.upperBG} />
+      <View style={styles.contentContainer}>
         {props.back ? (
-          <Link
-            component={TouchableOpacity}
-            to={props.backURL ? props.backURL : '/'}
-            style={styles.backContainer}
-          >
-            <Text style={styles.backText}>← Back</Text>
+          <Link component={TouchableOpacity} to={props.backURL}>
+            <Text style={styles.backText}>{'<'} BACK</Text>
           </Link>
         ) : (
-          <View></View>
+          <Text style={styles.temp}></Text>
         )}
-        <Image source={upperBG} style={styles.upperBG} />
-        <View style={styles.menuIconContainer}>
-          <TouchableOpacity onPress={toggleOverlay}>
-            <View style={styles.menuIcon}></View>
-            <View style={styles.menuIcon}></View>
-            <View style={styles.menuIcon}></View>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.pageName}>
+          {props.pageName ? props.pageName : 'Mark Attendance'}
+        </Text>
+        <TouchableOpacity
+          style={styles.menuIconContainer}
+          onPress={toggleOverlay}
+        >
+          <View style={styles.menuIconOne}></View>
+          <View style={styles.menuIconTwo}></View>
+          <View style={styles.menuIconThree}></View>
+        </TouchableOpacity>
       </View>
       <Overlay
         isVisible={visible}
@@ -69,22 +69,46 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   backText: {
-    fontFamily: 'Nunito_400Regular',
-    color: 'white',
+    fontFamily: 'Nunito_700Bold',
+    fontSize: 13,
   },
   upperBG: {
-    width: '100%',
-    zIndex: -1,
+    width: 116,
+    height: 67,
+  },
+  temp: {
+    width: 40,
+  },
+  contentContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  pageName: {
+    fontSize: 21,
+    fontFamily: 'Nunito_700Bold',
+    marginHorizontal: 30,
   },
   menuIconContainer: {
-    width: 26,
-    zIndex: 100,
-    marginLeft: -50,
-    marginTop: 50,
+    width: 16,
+    alignItems: 'flex-end',
   },
-  menuIcon: {
+  menuIconOne: {
+    borderTopColor: 'black',
     borderTopWidth: 2,
-    borderTopColor: 'white',
-    marginBottom: 6,
+    width: '100%',
+  },
+  menuIconTwo: {
+    borderTopColor: 'black',
+    borderTopWidth: 2,
+    width: '50%',
+    marginTop: 5,
+  },
+  menuIconThree: {
+    borderTopColor: 'black',
+    borderTopWidth: 2,
+    width: '25%',
+    marginTop: 5,
   },
 })

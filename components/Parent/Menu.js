@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Link } from 'react-router-native'
 
 import logo from '../../assets/PNG_Logo.png'
+import avatar from '../../assets/parent-avatar.png'
 
 export default function Menu() {
   const [parentName, setParentName] = useState('')
@@ -16,6 +17,7 @@ export default function Menu() {
   return (
     <View style={styles.container}>
       <View style={styles.menuRowContainer}>
+        <Image source={avatar} style={{ width: 96, height: 96, left: -20 }} />
         <Text style={styles.subtitle}>Hey,</Text>
         <Text style={styles.title}>{parentName}</Text>
         <Link component={TouchableOpacity} to='/parent-dashboard'>

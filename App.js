@@ -141,15 +141,10 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Route exact path='/'>
-          {/* <Login /> */}
-          {/* <NotificationComponent /> */}
-          {/* <Success /> */}
-          {/* <Header /> */}
-          <MarkStudents />
+          <Login />
         </Route>
         <Route exact path='/parent-profile'>
           <ParentProfile />
-          {/* <NotificationComponent /> */}
         </Route>
         <Route path='/select-type'>
           <SelectType />

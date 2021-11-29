@@ -442,13 +442,6 @@ export default function MarkStudents() {
       </TouchableOpacity>
       <Link
         component={TouchableOpacity}
-        style={styles.schoolButton}
-        to={'/school-direction'}
-      >
-        <Text style={styles.schoolButtonText}>TO SCHOOL</Text>
-      </Link>
-      <Link
-        component={TouchableOpacity}
         style={styles.button}
         to='/driver-dashboard'
       >
@@ -696,7 +689,7 @@ const styles = StyleSheet.create({
     width: 279,
     height: 49,
     borderRadius: 24.5,
-    backgroundColor: 'rgba(43, 136, 198, 255)',
+    backgroundColor: '#02C6FF',
     marginBottom: 20,
     marginTop: 20,
     alignItems: 'center',

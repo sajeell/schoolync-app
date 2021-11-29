@@ -72,14 +72,17 @@ export default function StudentDirection() {
         status: attendanceStatus,
       }
 
-      const attendance = await fetch('https://schoolync-backend.herokuapp.com/attendance', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
+      const attendance = await fetch(
+        'https://schoolync-backend.herokuapp.com/attendance',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      )
 
       const response = await attendance.json()
 
@@ -165,8 +168,11 @@ export default function StudentDirection() {
 
   return (
     <View style={styles.container}>
-      <Header back={true} backURL={'/driver-mark-students'} />
-      <Text style={styles.heading}>Route</Text>
+      <Header
+        back={true}
+        backURL={'/driver-mark-students'}
+        pageName='Student Direction'
+      />
       <MapView
         style={styles.map}
         region={{
@@ -216,7 +222,7 @@ export default function StudentDirection() {
             width: 145,
             height: 142,
             borderRadius: 10,
-            backgroundColor: 'rgba(0, 185, 102, 255)',
+            backgroundColor: '#00978E',
           }}
         >
           <Image
@@ -237,7 +243,7 @@ export default function StudentDirection() {
             marginTop: 30,
             width: '65%',
             height: 94,
-            backgroundColor: 'rgba(0, 185, 102, 255)',
+            backgroundColor: '#00978E',
           }}
         >
           <Text
@@ -280,11 +286,6 @@ export default function StudentDirection() {
           </Text>
         </View>
       </View>
-
-      <TouchableOpacity style={styles.schoolButton}>
-        <Text style={styles.schoolButtonText}>ON THE DOORSTEP</Text>
-      </TouchableOpacity>
-
       <Link
         component={TouchableOpacity}
         style={styles.button}
@@ -442,14 +443,14 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    width: 279,
-    height: 49,
-    borderRadius: 24.5,
-    backgroundColor: 'rgba(43, 136, 198, 255)',
+    width: '100%',
+    height: 55,
+    backgroundColor: '#00978E',
     marginBottom: 20,
-    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   buttonText: {
     fontFamily: 'Nunito_700Bold',
@@ -476,6 +477,8 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get('window').width,
-    height: '60%',
+    height: '83%',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
 })

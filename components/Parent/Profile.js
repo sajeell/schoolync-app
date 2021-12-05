@@ -15,7 +15,7 @@ export default function ParentProfile() {
     try {
       const parentID = await AsyncStorage.getItem('parentID')
       const user = await fetch(
-        `http://192.168.0.101:5000/admin/parent/${parentID}`
+        `https://schoolync-backend.herokuapp.com/admin/parent/${parentID}`
       )
 
       const temp = await user.json()

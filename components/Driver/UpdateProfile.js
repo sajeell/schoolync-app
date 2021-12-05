@@ -26,7 +26,7 @@ export default function UpdateProfile() {
     try {
       const driverID = await AsyncStorage.getItem('driverID')
       const user = await fetch(
-        `http://192.168.0.101:5000/admin/driver/${driverID}`
+        `https://schoolync-backend.herokuapp.com/admin/driver/${driverID}`
       )
 
       const temp = await user.json()

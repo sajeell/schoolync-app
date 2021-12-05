@@ -144,10 +144,7 @@ export default function App() {
     <NativeRouter>
       <View style={styles.container}>
         <Route exact path='/'>
-          {/* <Login /> */}
-          {/* <MarkStudents /> */}
-          {/* <DriverProfile /> */}
-          <ParentProfile />
+          <Login />
         </Route>
         <Route exact path='/parent-profile'>
           <ParentProfile />

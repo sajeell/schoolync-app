@@ -170,7 +170,7 @@ export default function StudentDirection() {
     <View style={styles.container}>
       <Header
         back={true}
-        backURL={'/driver-mark-students'}
+        backURL={'/driver-dashboard'}
         pageName='Student Direction'
       />
       <MapView

@@ -13,11 +13,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Link, useHistory } from 'react-router-native'
 import { Overlay } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select'
-import { Swipeable } from 'react-native-gesture-handler'
 
 import Header from './Header'
 
 import alertBG from '../../assets/alert-bg.jpg'
+import markStudentBG from '../../assets/mark-student-bg.png'
 
 export default function MarkStudents() {
   const [data, setData] = useState([])
@@ -43,14 +43,12 @@ export default function MarkStudents() {
         method: 'GET',
       }
 
-      fetch(
-        'https://schoolync-backend.herokuapp.com/admin/child',
-        requestOptions
-      )
+      fetch('http://192.168.0.101:5000/admin/child', requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          setData(JSON.parse(result).data)
           const temp = JSON.parse(result).data
+          const filteredData = temp.filter((student) => student.Parent !== null)
+          setData(filteredData)
         })
         .catch((error) => console.error('error', error))
     } catch (err) {
@@ -171,42 +169,6 @@ export default function MarkStudents() {
   // useEffect(() => {
   //   getTripStatus()
   // }, [])
-
-  const swipeRight = () => {
-    return (
-      <View style={styles.studentBoxContainerPresent}>
-        <View style={styles.redBox}></View>
-        <View style={styles.line}></View>
-
-        <TouchableOpacity style={styles.studentBoxPresent}>
-          <View>
-            <Text style={styles.nameMarked}>sajeel</Text>
-            <Text style={styles.addressMarked}>244 Terry Lane</Text>
-          </View>
-          <View>
-            <Text>X</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-  const swipeLeft = () => {
-    return (
-      <View style={styles.studentBoxContainerAbsent}>
-        <TouchableOpacity style={styles.studentBoxAbsent}>
-          <View>
-            <Text style={styles.nameMarked}>sajeel</Text>
-            <Text style={styles.addressMarked}>244 Terry Lane</Text>
-          </View>
-          <View>
-            <Text>X</Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.line}></View>
-        <View style={styles.greenBox}></View>
-      </View>
-    )
-  }
 
   return (
     <View style={styles.container}>
@@ -373,67 +335,35 @@ export default function MarkStudents() {
       </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <ScrollView>
-          <Swipeable
-            renderLeftActions={swipeRight}
-            onEnded={() => alert('ended')}
-          >
-            <View style={styles.studentBoxContainer}>
+          {data.map((student) => (
+            <TouchableOpacity
+              style={styles.studentBoxContainer}
+              key={student.id}
+              onPress={() =>
+                moveToDirectionsMap(
+                  student.id,
+                  student.Parent.address,
+                  student.name
+                )
+              }
+            >
               <View style={styles.redBox}></View>
               <View style={styles.line}></View>
 
               <View style={styles.studentBox}>
-                <Text style={styles.name}>sajeel</Text>
-                <Text style={styles.address}>244 Terry Lane</Text>
+                <Text style={styles.name}>{student.name}</Text>
+                <Text style={styles.address}>{student.Parent.address}</Text>
               </View>
               <View style={styles.line}></View>
               <View style={styles.greenBox}></View>
-            </View>
-          </Swipeable>
-          <Swipeable
-            renderRightActions={swipeLeft}
-            onEnded={() => alert('ended')}
-          >
-            <View style={styles.studentBoxContainer}>
-              <View style={styles.redBox}></View>
-              <View style={styles.line}></View>
-
-              <View style={styles.studentBox}>
-                <Text style={styles.name}>sajeel</Text>
-                <Text style={styles.address}>244 Terry Lane</Text>
-              </View>
-              <View style={styles.line}></View>
-              <View style={styles.greenBox}></View>
-            </View>
-          </Swipeable>
-          <View style={styles.studentBoxContainerPresent}>
-            <View style={styles.redBox}></View>
-            <View style={styles.line}></View>
-
-            <TouchableOpacity style={styles.studentBoxPresent}>
-              <View>
-                <Text style={styles.nameMarked}>sajeel</Text>
-                <Text style={styles.addressMarked}>244 Terry Lane</Text>
-              </View>
-              <View>
-                <Text>X</Text>
-              </View>
             </TouchableOpacity>
-          </View>
-          <View style={styles.studentBoxContainerAbsent}>
-            <TouchableOpacity style={styles.studentBoxAbsent}>
-              <View>
-                <Text style={styles.nameMarked}>sajeel</Text>
-                <Text style={styles.addressMarked}>244 Terry Lane</Text>
-              </View>
-              <View>
-                <Text>X</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={styles.line}></View>
-            <View style={styles.greenBox}></View>
-          </View>
+          ))}
         </ScrollView>
       </ScrollView>
+      <Image
+        style={{ zIndex: -1, position: 'absolute', bottom: 0 }}
+        source={markStudentBG}
+      />
       <TouchableOpacity
         style={styles.button}
         onPress={toggleUpdateStatusOverlay}
@@ -594,6 +524,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: '5%',
     marginTop: '5%',
+    paddingBottom: '5%',
   },
   studentBoxContainer: {
     flexDirection: 'row',

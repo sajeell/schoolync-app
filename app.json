@@ -2,7 +2,7 @@
   "expo": {
     "name": "schoolync",
     "slug": "schoolync",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyAEjvtIWPMH5ru26LtCo0ai6lH6aZ9QGuc"
         }
-      }
+      },
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

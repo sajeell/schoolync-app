@@ -10,6 +10,8 @@ import { Calendar } from 'react-native-calendars'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
+import calendar from '../../assets/calendar-illustration.png'
+
 export default function CalendarComponent() {
   const [markedDates, setMarkedDates] = useState({})
   let history = useHistory()
@@ -28,11 +30,12 @@ export default function CalendarComponent() {
 
   return (
     <View style={styles.container}>
-      <Header back={true} backURL={'/parent-dashboard'} />
+      <Header
+        back={true}
+        backURL={'/parent-dashboard'}
+        pageName={'Leave Apply'}
+      />
       <View style={styles.contentContainer}>
-        <View>
-          <Text style={styles.heading}>Choose Date</Text>
-        </View>
         <View style={styles.calendar}>
           <Calendar
             minDate={Date()}
@@ -42,6 +45,10 @@ export default function CalendarComponent() {
             onDayPress={handleDayPress}
           />
         </View>
+        <Image
+          source={calendar}
+          style={{ width: 150, height: 200, alignSelf: 'center' }}
+        />
         <TouchableOpacity
           onPress={async () => {
             const date = await AsyncStorage.getItem('date')
@@ -82,7 +89,8 @@ const styles = StyleSheet.create({
     top: '-180%',
   },
   calendar: {
-    marginBottom: '10%',
+    width: '70%',
+    alignSelf: 'center',
   },
   button: {
     alignSelf: 'center',

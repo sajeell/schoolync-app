@@ -20,14 +20,11 @@ export default function Menu() {
         <Image source={avatar} style={{ width: 96, height: 96, left: -20 }} />
         <Text style={styles.subtitle}>Hey,</Text>
         <Text style={styles.title}>{parentName}</Text>
-        <Link component={TouchableOpacity} to='/parent-dashboard'>
+        <Link component={TouchableOpacity} to='/driver-dashboard'>
           <Text style={styles.menuItemText}>- Home</Text>
         </Link>
-        <Link component={TouchableOpacity} to='/parent-profile'>
+        <Link component={TouchableOpacity} to='/driver-profile'>
           <Text style={styles.menuItemText}>- Profile</Text>
-        </Link>
-        <Link component={TouchableOpacity} to='/faq'>
-          <Text style={styles.menuItemText}>- FAQ</Text>
         </Link>
         <Link component={TouchableOpacity} to='/parent-dashboard'>
           <Text style={styles.menuItemText}>- About Us</Text>

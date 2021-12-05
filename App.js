@@ -44,6 +44,8 @@ import ParentProfile from './components/Parent/Profile'
 import Success from './components/Success/Success'
 import Header from './components/Driver/Header'
 import DriverProfile from './components/Driver/DriverProfile'
+import UpdateProfile from './components/Driver/UpdateProfile'
+import ParentUpdateProfile from './components/Parent/ParentUpdateProfile'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -144,10 +146,14 @@ export default function App() {
         <Route exact path='/'>
           {/* <Login /> */}
           {/* <MarkStudents /> */}
-          <DriverProfile />
+          {/* <DriverProfile /> */}
+          <ParentProfile />
         </Route>
         <Route exact path='/parent-profile'>
           <ParentProfile />
+        </Route>
+        <Route exact path='/parent-update-profile'>
+          <ParentUpdateProfile />
         </Route>
         <Route path='/select-type'>
           <SelectType />
@@ -184,6 +190,12 @@ export default function App() {
         </Route>
         <Route exact path='/driver-dashboard'>
           <MarkStudents />
+        </Route>
+        <Route exact path='/driver-profile'>
+          <DriverProfile />
+        </Route>
+        <Route exact path='/driver-update-profile'>
+          <UpdateProfile />
         </Route>
         <Route exact path='/notifications'>
           <NotificationComponent />

@@ -17,9 +17,7 @@ import { Overlay } from 'react-native-elements'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
-import backArrow from '../../assets/map-back.png'
-import blueMarker from '../../assets/blue-marker.png'
-import redMarker from '../../assets/red-marker.png'
+import contactDriver from '../../assets/contact-driver.png'
 import busMap from '../../assets/map-bus.png'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import studentTrip from '../../assets/student-trip.png'
@@ -253,6 +251,7 @@ export default function TrackTrip() {
 
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <View style={styles.overlay}>
+          <Image source={contactDriver} style={{ width: 272, top: -12 }} />
           <Text style={styles.overlayHeading}>Driver Information</Text>
           <Text style={styles.overlayText}>Driver Name: {driverName}</Text>
           <Text style={styles.overlayText}>{driverPhone}</Text>
@@ -412,10 +411,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_700Bold',
   },
   overlay: {
-    margin: 10,
+    margin: 0,
+    padding: 0,
     alignItems: 'center',
     width: 250,
-    height: 300,
+    height: 500,
   },
   overlayHeading: {
     fontFamily: 'Nunito_700Bold',
@@ -430,7 +430,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     width: '80%',
-    marginTop: '10%',
     alignItems: 'center',
     backgroundColor: '#2B88C6',
     padding: '4%',

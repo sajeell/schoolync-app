@@ -1,15 +1,42 @@
-import React from 'react'
-import { StyleSheet, View, Image, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 
 import Header from './Header'
 
 import avatar from '../../assets/driver-avatar.png'
 import profileEditIcon from '../../assets/profile-edit.png'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Link } from 'react-router-native'
 
 export default function DriverProfile() {
+  const [data, setData] = useState('')
+  const [date, setDate] = useState('')
+
+  const getData = async () => {
+    try {
+      const driverID = await AsyncStorage.getItem('driverID')
+      const user = await fetch(
+        `http://192.168.0.101:5000/admin/driver/${driverID}`
+      )
+
+      const temp = await user.json()
+
+      setData(await temp.data[0])
+
+      setDate(await data.createdAt)
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  })
+
   return (
     <View>
       <Header pageName={'My Profile'} />
+
       <Image
         source={avatar}
         style={{
@@ -30,30 +57,38 @@ export default function DriverProfile() {
         ></View>
         <View style={styles.profileContent}>
           <View>
-            <Text style={styles.boxSubTitle}>Stephen Graslon</Text>
-            <Text style={styles.title}>abc@abc.com</Text>
+            <Text style={styles.boxSubTitle}>{data.name}</Text>
+            <Text style={styles.title}>{data.email}</Text>
           </View>
-          <Image source={profileEditIcon} />
+          <Link component={TouchableOpacity} to='/driver-update-profile'>
+            <Image source={profileEditIcon} />
+          </Link>
         </View>
         <View style={styles.boxContainer}>
           <View style={styles.topRow}>
             <View style={styles.topLeftBox}>
               <Text style={styles.boxTitle}>City:</Text>
-              <Text style={styles.boxSubTitle}>Islamabad</Text>
+              <Text style={styles.boxSubTitle}>{data.city}</Text>
             </View>
             <View style={styles.topRightBox}>
-              <Text style={styles.boxTitle}>City:</Text>
-              <Text style={styles.boxSubTitle}>Islamabad</Text>
+              <Text style={styles.boxTitle}>Experience:</Text>
+              <Text style={styles.boxSubTitle}>1 Years</Text>
             </View>
           </View>
           <View style={styles.topRow}>
             <View style={styles.bottomLeftBox}>
-              <Text style={styles.boxTitle}>City:</Text>
+              <Text style={styles.boxTitle}>School:</Text>
               <Text style={styles.boxSubTitle}>Islamabad</Text>
             </View>
             <View style={styles.bottomRightBox}>
-              <Text style={styles.boxTitle}>City:</Text>
-              <Text style={styles.boxSubTitle}>Islamabad</Text>
+              <Text style={styles.boxTitle}>Joined:</Text>
+              <Text style={styles.boxSubTitle}>
+                {date
+                  ? date.length > 10
+                    ? date.substr(0, 10)
+                    : date.substr(0, 1)
+                  : ''}
+              </Text>
             </View>
           </View>
         </View>
@@ -104,7 +139,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   bottomRightBox: {
-    padding: 50,
+    padding: 30,
   },
   boxTitle: {
     fontSize: 14,

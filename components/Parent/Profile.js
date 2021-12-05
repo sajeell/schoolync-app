@@ -1,149 +1,159 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
-import Footer from '../Footer/Footer'
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 import Header from '../Header/Header'
 
-import { useHistory } from 'react-router-native'
-import { TextInput } from 'react-native-gesture-handler'
+import avatar from '../../assets/parent-avatar.png'
+import profileEditIcon from '../../assets/profile-edit.png'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Link } from 'react-router-native'
 
 export default function ParentProfile() {
-  const [parentData, setParentData] = useState({})
+  const [data, setData] = useState('')
+  const [date, setDate] = useState('')
 
-  const [fullName, setFullName] = useState('')
-  const [address, setAddress] = useState('')
-
-  let history = useHistory()
-
-  const getParentData = async () => {
+  const getData = async () => {
     try {
       const parentID = await AsyncStorage.getItem('parentID')
+      const user = await fetch(
+        `http://192.168.0.101:5000/admin/parent/${parentID}`
+      )
 
-      if (parentID) {
-        const parent = await fetch(
-          `https://schoolync-backend.herokuapp.com/admin/parent/${parseInt(parentID)}`
-        )
+      const temp = await user.json()
 
-        const data = await parent.json()
+      setData(await temp.data[0])
 
-        setParentData(data.data[0])
-
-        setFullName(parentData.name)
-        setAddress(parentData.address)
-
-      }
+      setDate(await data.createdAt)
     } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const updateParentData = async () => {
-    try {
-      const parentID = await AsyncStorage.getItem('parentID')
-
-      if (parentID) {
-        const body = { fullName, address }
-
-        const parent = await fetch(
-          `https://schoolync-backend.herokuapp.com/admin/parent/${parseInt(parentID)}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(body),
-          }
-        )
-
-        alert('Updated Successfully!')
-        history.push('/parent-dashboard')
-      }
-    } catch (error) {
-      console.error(error)
+      alert(error.message)
     }
   }
 
   useEffect(() => {
-    getParentData()
-  }, [])
+    getData()
+  })
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <Text style={styles.heading}>Update Profile</Text>
-      <View style={{ top: -100 }}>
-        <View>
-          <TextInput
-            placeholder='Full Name'
-            style={styles.inputField}
-            value={fullName}
-            onChangeText={(e) => {
-              setFullName(e)
-            }}
-          />
-          <TextInput
-            placeholder='Address'
-            multiline
-            scrollEnabled
-            value={address}
-            style={styles.inputField}
-            onChangeText={(e) => {
-              setAddress(e)
-            }}
-          />
+    <View>
+      <Header pageName={'My Profile'} />
+
+      <Image
+        source={avatar}
+        style={{
+          alignSelf: 'center',
+          width: 278,
+          height: 276,
+          marginTop: 20,
+        }}
+      />
+      <View style={styles.contentContainer}>
+        <View
+          style={{
+            borderTopColor: 'gray',
+            borderTopWidth: 3,
+            width: '40%',
+            alignSelf: 'center',
+          }}
+        ></View>
+        <View style={styles.profileContent}>
+          <View>
+            <Text style={styles.boxSubTitle}>{data.name}</Text>
+            <Text style={styles.title}>{data.email}</Text>
+          </View>
+          <Link component={TouchableOpacity} to='/parent-update-profile'>
+            <Image source={profileEditIcon} />
+          </Link>
+        </View>
+        <View style={styles.boxContainer}>
+          <View style={styles.topRow}>
+            <View style={styles.topLeftBox}>
+              <Text style={styles.boxTitle}>City:</Text>
+              <Text style={styles.boxSubTitle}>{data.city}</Text>
+            </View>
+            <View style={styles.topRightBox}>
+              <Text style={styles.boxTitle}>Experience:</Text>
+              <Text style={styles.boxSubTitle}>1 Years</Text>
+            </View>
+          </View>
+          <View style={styles.topRow}>
+            <View style={styles.bottomLeftBox}>
+              <Text style={styles.boxTitle}>School:</Text>
+              <Text style={styles.boxSubTitle}>New York School</Text>
+            </View>
+            <View style={styles.bottomRightBox}>
+              <Text style={styles.boxTitle}>Joined:</Text>
+              <Text style={styles.boxSubTitle}>
+                {date
+                  ? date.length > 10
+                    ? date.substr(0, 10)
+                    : date.substr(0, 1)
+                  : ''}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={updateParentData}
-      >
-        <Text style={styles.buttonText}>Update</Text>
-      </TouchableOpacity>
-      <Footer dashboard={true} />
     </View>
   )
 }
 
-const greenColor = '#00B966'
-
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
+  contentContainer: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    top: -20,
+    paddingTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    alignItems: 'center',
     height: '100%',
   },
-
-  heading: {
-    fontSize: 22,
-    paddingHorizontal: '5%',
+  boxContainer: {
+    marginTop: 50,
+    bottom: 0,
+  },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  topLeftBox: {
+    padding: 50,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+  },
+  topRightBox: {
+    padding: 50,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+  },
+  bottomLeftBox: {
+    padding: 50,
+    borderRightWidth: 1,
+  },
+  bottomRightBox: {
+    padding: 30,
+  },
+  boxTitle: {
+    fontSize: 14,
+  },
+  boxSubTitle: {
+    fontSize: 19,
     fontFamily: 'Nunito_700Bold',
-    top: -50,
+    width: 110,
+    textAlign: 'left',
   },
-  inputField: {
-    width: '90%',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    marginLeft: 20,
-    marginBottom: 10,
-    height: 50,
-    borderRadius: 10,
-  },
-  buttonContainer: {
-    justifyContent: 'center',
-    maxWidth: '90%',
-    width: 270,
-    height: 45,
-    backgroundColor: greenColor,
-    borderRadius: 10,
-    top: -100,
-    alignSelf: 'center',
-    zIndex: -1,
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 16,
-    color: 'white',
+  profileContent: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginTop: 50,
   },
 })
